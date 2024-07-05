@@ -1,7 +1,80 @@
 <?php
-if(isset($_POST["signup"])){
-    $ss = "you tried to sign up";
-    echo $ss;
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include("conn.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $fname = $_POST['Full_Name'];
+    $email = $_POST['Email'];
+    $age = $_POST['Age'];
+    $username = $_POST['UserName'];
+    $password = $_POST['Password'];
+    $cPassword = $_POST['CPassword'];
+
+    $usernameAdmin = "Admin321";
+    $passwordAdmin = "Admin@124";
+
+    if (!empty($fname) && !empty($email) && !empty($age) && !empty($_POST['Gender']) && !empty($username) && !empty($password) && !empty($cPassword)) {
+
+        if (isset($_POST["Agree"])) {
+
+            $check_username = "SELECT COUNT(*) FROM `USER` WHERE `UserName` = '$username'";
+            $result = mysqli_query($con, $check_username);
+            $row = mysqli_fetch_assoc($result);
+            if ($row['COUNT(*)'] > 0) {
+                $error = "Username already exists.";
+            } else {
+
+                $gender = $_POST['Gender'];
+
+                if ($password == $cPassword) {
+
+                    if (!empty($_POST['Photo'])) {
+                        $imagename = $_FILES['Photo']['name'];
+                        $tmpname = $_FILES['myimage']['tmp_name'];
+                        $error = $_FILES['myimage']['error'];
+
+                        if ($error === 0) {
+                            $imageex = pathinfo($imagename, PATHINFO_EXTENSION);
+
+                            $imageexlc = strtolower($imageex);
+
+                            $allowedex = array('jpg', 'jpeg', 'png');
+
+                            if (in_array($imageexlc, $allowedex)) {
+                                $newimgname = uniqid("IMG-", true) . '.' . $imageexlc;
+                                $imguploadpath = 'uploads/' . $newimgname;
+                                move_uploaded_file($tmpname, $imguploadpath);
+                            } else {
+                                $error = "Photo not supported!!";
+                            }
+                        }
+                    } else {
+                        $newimgname = 'uploads/default.jpg';
+                    }
+
+
+
+                    $insert = "INSERT INTO `USER` (`Photo`, `Full_Name`, `Gender`, `Age`, `Email`, `UserName`, `Password`) 
+          VALUES (\"$newimgname\", \"$fname\", \"$gender\", \"$age\", \"$email\", \"$username\", \"$password\")";
+                    $yes = mysqli_query($con, $insert);
+                    if ($yes) {
+                        echo '<script type="text/javascript">alert("User Registered Successfully!!!")</script>';
+                        header("Location: login.php");
+                    } else {
+                        $error = "User Not Registered Successfully!!";
+                    }
+                } else {
+                    $error = "Password and Confirm password don't match!";
+                }
+            }
+        } else {
+            $error = "You must agree to the terms and conditions!";
+        }
+    } else {
+        $error = "Fill in all the required credentials!";
+    }
 }
 
 ?>
@@ -43,29 +116,29 @@ if(isset($_POST["signup"])){
                 Create Your Account
             </h1>
             <p class="ml-12 mb-6">Lets get Started</p>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="ml-12 grid grid-cols-4 gap-x-6 gap-y-3 mr-12">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="ml-12 grid grid-cols-4 gap-x-6 gap-y-3 mr-12" method="post">
                 <div class="col-span-4">
                     <label htmlFor="full_name" class="">
-                        Full name
+                        Full name*
                     </label>
                     <input id="Full_Name" name="Full_Name" type="text" placeholder="enter full name Here" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
                 <div class="col-span-4">
                     <label htmlFor="email" class="">
-                        Email
+                        Email*
                     </label>
                     <input id="Email" name="Email" type="email" placeholder="name@example.com" class="block w-full shadow-lg appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
 
                 <div class="col-span-1">
                     <label htmlFor="age" class="">
-                        Age
+                        Age*
                     </label>
                     <input id="Age" name="Age" type="number" placeholder="0" class="shadow-lg mt-2 w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
                 <div class="w-full col-span-3">
                     <label htmlFor="gender" class="">
-                        Gender
+                        Gender*
                     </label>
                     <div class="border rounded-lg border-BrownDark flex py-2 px-4 mt-1">
                         <input type="radio" name="Gender" value="Male" />
@@ -75,7 +148,7 @@ if(isset($_POST["signup"])){
                     </div>
                 </div>
                 <div class="col-span-2">
-                    <label htmlFor="userName">Username</label>
+                    <label htmlFor="userName">Username*</label>
                     <input id="UserName" name="UserName" type="text" placeholder="unique username" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
                 <div class="col-span-2">
@@ -85,12 +158,12 @@ if(isset($_POST["signup"])){
                     <input type="file" accept="image/*" placeholder="Profile Picture" name="Photo" class="block w-full bg-BrownLight border border-BrownDark border-dotted rounded-md px-3 py-2 text-BrownDark" />
                 </div>
                 <div class="col-span-2">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password*</label>
                     <input id="Password" name="Password" minLength={8} type="password" placeholder="min 8 chars" class="w-full block shadow-lg appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
 
                 <div class="col-span-2">
-                    <label htmlFor="cPassword">Confirm Password</label>
+                    <label htmlFor="cPassword">Confirm Password*</label>
                     <input id="CPassword" name="CPassword" minLength={8} type="password" placeholder="enter password again" class="w-full mb-4 block shadow-lg appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
 
@@ -103,11 +176,17 @@ if(isset($_POST["signup"])){
                     </a>
                 </div>
                 <div class="col-span-4">
-                    <p class="text-red"><? $ss ?></p>
+                    <?php
+                    // Check if the error message is set
+                    if (isset($error)) {
+                    ?>
+                        <div class="error text-red"><?php echo $error; ?></div>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="my-auto col-span-4">
-                    <input type="submit" value="Sign Up" name="signup" method="post"
-                    class="w-full rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+                    <input type="submit" value="Sign Up" name="signup" class="w-full rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
                 </div>
                 <div class="col-span-4">
                     <p class="inline">Already have an account? </p>
