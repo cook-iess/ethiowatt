@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (($_SERVER["REQUEST_METHOD"] == "POST")) {
 
     $fname = $_POST['Full_Name'];
     $email = $_POST['Email'];
@@ -11,9 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['UserName'];
     $password = $_POST['Password'];
     $cPassword = $_POST['CPassword'];
-
-    $usernameAdmin = "Admin321";
-    $passwordAdmin = "Admin@124";
 
     if (!empty($fname) && !empty($email) && !empty($age) && !empty($_POST['Gender']) && !empty($username) && !empty($password) && !empty($cPassword)) {
 
@@ -30,38 +27,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($password == $cPassword) {
 
-                    if (!empty($_POST['Photo'])) {
+                    if(!empty($_FILES['Photo']['name'])){
+
                         $imagename = $_FILES['Photo']['name'];
-                        $tmpname = $_FILES['myimage']['tmp_name'];
-                        $error = $_FILES['myimage']['error'];
+                        $tmpname = $_FILES['Photo']['tmp_name'];
+                        $error = $_FILES['Photo']['error'];
 
                         if ($error === 0) {
                             $imageex = pathinfo($imagename, PATHINFO_EXTENSION);
-
+                    
                             $imageexlc = strtolower($imageex);
-
+                    
                             $allowedex = array('jpg', 'jpeg', 'png');
-
+                    
                             if (in_array($imageexlc, $allowedex)) {
-                                $newimgname = uniqid("IMG-", true) . '.' . $imageexlc;
-                                $imguploadpath = 'uploads/' . $newimgname;
+                                $newimgname=uniqid("IMG-",true).'.'.$imageexlc;
+                                $imguploadpath='uploads/user/'.$newimgname;
                                 move_uploaded_file($tmpname, $imguploadpath);
+                                $newimgname='uploads/user/'.$newimgname;
                             } else {
-                                $error = "Photo not supported!!";
+                                $error = "Image this Type not supported!";
+                                echo "<h4>Image this Type not supported!</h4>";
                             }
                         }
-                    } else {
-                        $newimgname = 'uploads/default.jpg';
-                    }
-
+                    }else{
+                        $newimgname = "uploads/user/default.jpg";
+                }
+                
 
 
                     $insert = "INSERT INTO `USER` (`Photo`, `Full_Name`, `Gender`, `Age`, `Email`, `UserName`, `Password`) 
           VALUES (\"$newimgname\", \"$fname\", \"$gender\", \"$age\", \"$email\", \"$username\", \"$password\")";
                     $yes = mysqli_query($con, $insert);
                     if ($yes) {
-                        echo '<script type="text/javascript">alert("User Registered Successfully!!!")</script>';
+                        echo '<script type="text/javascript">alert("Logging Successfully!!!")</script>';
                         header("Location: login.php");
+                        echo '<script type="text/javascript">alert("Logging Successfully!!!")</script>';
                     } else {
                         $error = "User Not Registered Successfully!!";
                     }
@@ -75,6 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $error = "Fill in all the required credentials!";
     }
+}
+else{
+    echo "image not uploaded";
 }
 
 ?>
@@ -116,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Create Your Account
             </h1>
             <p class="ml-12 mb-6">Lets get Started</p>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="ml-12 grid grid-cols-4 gap-x-6 gap-y-3 mr-12" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="ml-12 grid grid-cols-4 gap-x-6 gap-y-3 mr-12" method="post" enctype="multipart/form-data">
                 <div class="col-span-4">
                     <label htmlFor="full_name" class="">
                         Full name*
@@ -155,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label htmlFor="pp" class="">
                         Upload Profile Photo
                     </label>
-                    <input type="file" accept="image/*" placeholder="Profile Picture" name="Photo" class="block w-full bg-BrownLight border border-BrownDark border-dotted rounded-md px-3 py-2 text-BrownDark" />
+                    <input type="file" name="Photo" class="block w-full bg-BrownLight border border-BrownDark border-dotted rounded-md px-3 py-2 text-BrownDark" />
                 </div>
                 <div class="col-span-2">
                     <label htmlFor="password">Password*</label>
