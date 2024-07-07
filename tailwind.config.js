@@ -9,7 +9,7 @@ module.exports = {
       'BrownLight': '#E5D3B3',
       'BrownDark': '#664229',
       'BrownDark2': '#9A7B4F',
-      'red' : '#FF0000',
+      'red': '#FF0000',
       'metal': '#565584',
       'tahiti': '#3ab7bf',
       'silver': '#ecebff',

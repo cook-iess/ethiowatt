@@ -7,12 +7,12 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
 
     $fname = $_POST['Full_Name'];
     $email = $_POST['Email'];
-    $age = $_POST['Age'];
+    $Bio = $_POST['Bio'];
     $username = $_POST['UserName'];
     $password = $_POST['Password'];
     $cPassword = $_POST['CPassword'];
 
-    if (!empty($fname) && !empty($email) && !empty($age) && !empty($_POST['Gender']) && !empty($username) && !empty($password) && !empty($cPassword)) {
+    if (!empty($fname) && !empty($email) && !empty($Bio) && !empty($_POST['Gender']) && !empty($username) && !empty($password) && !empty($cPassword)) {
 
         if (isset($_POST["Agree"])) {
 
@@ -47,7 +47,6 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                                 $newimgname='uploads/user/'.$newimgname;
                             } else {
                                 $error = "Image this Type not supported!";
-                                echo "<h4>Image this Type not supported!</h4>";
                             }
                         }
                     }else{
@@ -56,13 +55,11 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                 
 
 
-                    $insert = "INSERT INTO `USER` (`Photo`, `Full_Name`, `Gender`, `Age`, `Email`, `UserName`, `Password`) 
-          VALUES (\"$newimgname\", \"$fname\", \"$gender\", \"$age\", \"$email\", \"$username\", \"$password\")";
+                    $insert = "INSERT INTO `USER` (`Photo`, `Full_Name`, `Gender`, `Bio`, `Email`, `UserName`, `Password`) 
+          VALUES (\"$newimgname\", \"$fname\", \"$gender\", \"$Bio\", \"$email\", \"$username\", \"$password\")";
                     $yes = mysqli_query($con, $insert);
                     if ($yes) {
-                        echo '<script type="text/javascript">alert("Logging Successfully!!!")</script>';
                         header("Location: login.php");
-                        echo '<script type="text/javascript">alert("Logging Successfully!!!")</script>';
                     } else {
                         $error = "User Not Registered Successfully!!";
                     }
@@ -77,9 +74,6 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
         $error = "Fill in all the required credentials!";
     }
 }
-else{
-    echo "image not uploaded";
-}
 
 ?>
 
@@ -89,7 +83,7 @@ else{
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign-up</title>
     <link rel="stylesheet" href="output.css">
 </head>
 
@@ -134,13 +128,13 @@ else{
                     <input id="Email" name="Email" type="email" placeholder="name@example.com" class="block w-full shadow-lg appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
 
-                <div class="col-span-1">
+                <div class="col-span-2">
                     <label htmlFor="age" class="">
-                        Age*
+                        Bio
                     </label>
-                    <input id="Age" name="Age" type="number" placeholder="0" class="shadow-lg mt-2 w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
+                    <input id="Bio" name="Bio" type="text" placeholder="Something about yourself" class="shadow-lg mt-2 w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
-                <div class="w-full col-span-3">
+                <div class="w-full col-span-2">
                     <label htmlFor="gender" class="">
                         Gender*
                     </label>
