@@ -28,7 +28,7 @@ if (isset($_GET['UserName'])) {
                     </h1>
                 </div>
                 <div class="ml-4 flex">
-                    <a href="annman.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">
+                    <a href="announcements.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">
                         Back</a>
                 </div>
             </div>

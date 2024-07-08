@@ -27,6 +27,8 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
 
                 if ($password == $cPassword) {
 
+                    $password = password_hash($password, PASSWORD_DEFAULT);
+
                     if(!empty($_FILES['Photo']['name'])){
 
                         $imagename = $_FILES['Photo']['name'];
@@ -169,7 +171,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                     <input type="checkbox" name="Agree" class="bg-BrownDark border-BrownDark border text-BrownDark focus:ring-BrownDark checked:bg-BrownDark" />
 
                     <p class="inline"> I agree to the </p>
-                    <a href="" class="font-extrabold font-sans font-italic inline underline">
+                    <a href="https://docs.google.com/document/d/1KdnkTXs1JC_GNXShBbkxyYt1Q9N8b7Vabjy0cCqEpc8/edit?usp=sharing" class="font-extrabold font-sans font-italic inline underline">
                         Terms & Condotions
                     </a>
                 </div>
