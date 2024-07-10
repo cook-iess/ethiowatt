@@ -1,109 +1,25 @@
 <?php
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
 
-if (isset($_POST["signup"])) {
+require "header.php";
 
-    $fname = $_POST['Full_Name'];
-    $email = $_POST['Email'];
-    $Bio = $_POST['Bio'];
-    $username = $_POST['UserName'];
-    $password = $_POST['Password'];
-    $cPassword = $_POST['CPassword'];
+if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
-    if (!empty($fname) && !empty($email) && !empty($_POST['Gender']) && !empty($username) && !empty($password) && !empty($cPassword)) {
+    $loguser = $_SESSION['UserName'];
 
-        if (isset($_POST["Agree"])) {
-
-            $check_username = "SELECT COUNT(*) FROM `USER` WHERE `UserName` = '$username'";
-            $result = mysqli_query($con, $check_username);
-            $row = mysqli_fetch_assoc($result);
-            if ($row['COUNT(*)'] > 0) {
-                header("Location: signup.php?error=userexists&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&Photo=" . $_FILES['Photo']['name']);
-                exit();
-            } else {
-
-                $gender = $_POST['Gender'];
-
-                if ($password == $cPassword) {
-
-                    $password = password_hash($password, PASSWORD_DEFAULT);
-
-                    if (!empty($_FILES['Photo']['name'])) {
-
-                        $imagename = $_FILES['Photo']['name'];
-                        $tmpname = $_FILES['Photo']['tmp_name'];
-                        $error = $_FILES['Photo']['error'];
-
-                        if ($error === 0) {
-                            $imageex = pathinfo($imagename, PATHINFO_EXTENSION);
-
-                            $imageexlc = strtolower($imageex);
-
-                            $allowedex = array('jpg', 'jpeg', 'png');
-
-                            if (in_array($imageexlc, $allowedex)) {
-                                $newimgname = uniqid("IMG-", true) . '.' . $imageexlc;
-                                $imguploadpath = 'uploads/user/' . $newimgname;
-                                move_uploaded_file($tmpname, $imguploadpath);
-                                $newimgname = 'uploads/user/' . $newimgname;
-                            } else {
-                                header("Location: signup.php?error=notsupported&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
-                                exit();
-                            }
-                        }
-                    } else {
-                        $newimgname = "uploads/user/default.jpg";
-                    }
-
-                    $newimgname = mysqli_real_escape_string($con, $newimgname);
-                    $fname = mysqli_real_escape_string($con, $fname);
-                    $gender = mysqli_real_escape_string($con, $gender);
-                    $Bio = mysqli_real_escape_string($con, $Bio);
-                    $email = mysqli_real_escape_string($con, $email);
-                    $username = mysqli_real_escape_string($con, $username);
-                    $password = mysqli_real_escape_string($con, $password);
-
-
-                    $insert = "INSERT INTO `USER` (`Photo`, `Full_Name`, `Gender`, `Bio`, `Email`, `UserName`, `Password`) 
-          VALUES (\"$newimgname\", \"$fname\", \"$gender\", \"$Bio\", \"$email\", \"$username\", \"$password\")";
-                    $yes = mysqli_query($con, $insert);
-                    if ($yes) {
-                        header("Location: login.php?signup=success");
-                        exit();
-                    } else {
-                        header("Location: signup.php?error=failed&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
-                        exit();
-                    }
-                } else {
-                    header("Location: signup.php?error=nomatch&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
-                    exit();
-                }
-            }
-        } else {
-            header("Location: signup.php?error=notaggreed&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
-            exit();
-        }
-    } else {
-        header("Location: signup.php?error=emptyfields&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
-        exit();
-    }
-}
+    $sql = "SELECT * FROM `USER` WHERE `UserName` = '$loguser'";
+    $rs = mysqli_query($con, $sql);
+    $result = mysqli_fetch_assoc($rs);
+    $pp = $result['Photo'];
 
 ?>
 
+    <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
 
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign-up</title>
-    <link rel="stylesheet" href="output.css">
-</head>
-
-<body class="w-full h-full flex bg-BrownLight font-TextFont">
     <div class="flex p-5 fixed top-0 mt-5">
         <img src="img/logo.png" class="w-14 h-10 my-auto" />
         <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto text-BrownDark">
@@ -248,6 +164,33 @@ if (isset($_POST["signup"])) {
             </form>
         </div>
     </div>
-</body>
 
-</html>
+
+        <script>
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('nav');
+                if (window.pageYOffset > 0) {
+                    header.classList.add('shadow-2xl');
+                } else {
+                    header.classList.remove('shadow-2xl');
+                }
+            });
+
+            var ann = document.getElementById("pobo");
+            pobo.setAttribute("style", "border-bottom-width: 2px;");
+
+            var newTitleElement = document.createElement("title");
+            newTitleElement.textContent = "Post Book";
+            var headElement = document.getElementsByTagName("head")[0];
+            headElement.appendChild(newTitleElement);
+        </script>
+
+    </body>
+
+    </html>
+
+<?php
+} else {
+    header("Location: index.php");
+}
+?>

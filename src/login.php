@@ -3,36 +3,58 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["login"])) {
   $username = $_POST['UserName'];
   $password = $_POST['Password'];
 
   $usernameAdmin = "Admin321";
-  $passwordAdmin = "Admin@124";
 
   if (!empty($username) && !empty($password)) {
 
-    if ($username == $usernameAdmin && $password == $passwordAdmin) {
-      header("Location: adminHome.php");
-    } else {
+    if ($username == $usernameAdmin) {
       $sql = "SELECT * FROM `USER` WHERE `UserName` = '$username'";
       $rs = mysqli_query($con, $sql);
       $result = mysqli_fetch_assoc($rs);
       if ($test = password_verify($password, $result['Password'])) {
-        $sql = "SELECT * FROM `USER` WHERE `UserName` = '$username' AND `Password` = '$password'";
-        $result = mysqli_query($con, $sql);
-        $count = mysqli_num_rows($result);
-        if ($count > 0) {
-          header("Location: announcements.php");
+
+        session_start();
+        $_SESSION['UserName'] = $result['UserName'];
+        setcookie('UserName',$username, time()+3600);
+
+        header("Location: adminHome.php?&login=success");
+        exit();
+      } else {
+        header("Location: login.php?error=incorrect&username=" . $username);
+        exit();
+      }
+    } else {
+      $sql = "SELECT * FROM `USER` WHERE `UserName` = '$username'";
+      $rs = mysqli_query($con, $sql);
+      $result = mysqli_fetch_assoc($rs);
+      $count = mysqli_num_rows($rs);
+
+      if ($count > 0) {
+
+        if ($test = password_verify($password, $result['Password'])) {
+
+          session_start();
+          $_SESSION['UserName'] = $result['UserName'];
+          setcookie('UserName',$username, time()+3600);
+
+          header("Location: announcements.php?&login=success");
+          exit();
         } else {
-          $error = "Please sign up first.";
+          header("Location: login.php?error=incorrect&username=" . $username);
+          exit();
         }
-      }else{
-        $error = "Incorrect Password!";
+      } else {
+        header("Location: login.php?error=signedup");
+        exit();
       }
     }
   } else {
-    $error = "Fill in the Credentials!";
+    header("Location: login.php?error=emptyfields&username=" . $username);
+    exit();
   }
 }
 
@@ -66,7 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="py-6 h-1/3 px-12">
         <div class="col-span-2 mb-4">
           <label htmlFor="username">Username</label>
-          <input id="username" type="text" name="UserName" placeholder="unique username" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
+          <input id="username" type="text" name="UserName" placeholder="Enter Username" value="<?php
+                                                                                                if (isset($_GET['username'])) {
+                                                                                                  echo $_GET['username'];
+                                                                                                } ?>" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
         </div>
         <div class="col-span-2 mb-4">
           <label htmlFor="password">Password</label>
@@ -74,11 +99,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="col-span-2">
           <?php
-          // Check if the error message is set
-          if (isset($error)) {
+
+          if (isset($_GET['error'])) {
+            if ($_GET['error'] == "emptyfields") {
           ?>
-            <div class="error text-red"><?php echo $error; ?></div>
+              <div class="error text-red">Fill in all the required Fields</div>
+            <?php
+            } elseif ($_GET['error'] == "incorrect") {
+            ?>
+              <div class="error text-red">Incorrect password</div>
+            <?php
+            } elseif ($_GET['error'] == "signedup") {
+            ?>
+              <div class="error text-red">You need to get signed up first</div>
+            <?php
+            } elseif ($_GET['login'] == "success") {
+            ?>
+              <div class="error text-red">Login successful</div>
           <?php
+            }
           }
           ?>
         </div>

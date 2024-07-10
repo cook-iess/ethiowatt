@@ -3,6 +3,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
 
+require "header2.php";
+
+if(isset($_SESSION['UserName']) && $_SESSION['UserName']== 'Admin321' && isset($_COOKIE['UserName'])){
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
   $ID = $_POST["ID"];
 
@@ -24,28 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Management Announcements</title>
+  <title>Manage Announcements</title>
   <link rel="stylesheet" href="output.css">
 </head>
 
 <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
-  <nav class="flex justify-between" style="margin-top: 20px; margin-left: 30px;  margin-right: 30px; ">
-    <div class="flex">
-      <img src="img/logo.png" alt="" class="w-12 h-10 my-auto" />
-      <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto">
-        Ethio Wattpad
-      </h1>
-    </div>
 
-    <div class="my-auto">
-        <a href="postann.php" 
-        class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-110">Post Announcements</a>
-      <a href="adminHome.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-110">
-        Back</a>
-    </div>
-  </nav>
-
-  <h1 class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-5 mb-6">Announcements</h1>
+  <h1 class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-16 mb-6">Announcements</h1>
   <div class="md:pt-10 pt-4">
     <?php
     $select = "select * from Announcements ORDER BY ID DESC";
@@ -97,3 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
 </body>
 
 </html>
+
+<?php
+
+}else{
+    header("Location: index.php");
+}
+?>

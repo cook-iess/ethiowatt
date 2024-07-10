@@ -614,6 +614,10 @@ video {
   grid-column: span 4 / span 4;
 }
 
+.m-4{
+  margin: 1rem;
+}
+
 .mx-10{
   margin-left: 2.5rem;
   margin-right: 2.5rem;
@@ -697,6 +701,10 @@ video {
   margin-top: 0.25rem;
 }
 
+.mt-16{
+  margin-top: 4rem;
+}
+
 .mt-2{
   margin-top: 0.5rem;
 }
@@ -717,16 +725,28 @@ video {
   margin-top: 2rem;
 }
 
-.mt-12{
-  margin-top: 3rem;
-}
-
 .mt-14{
   margin-top: 3.5rem;
 }
 
-.mt-16{
-  margin-top: 4rem;
+.ml-28{
+  margin-left: 7rem;
+}
+
+.mt-6{
+  margin-top: 1.5rem;
+}
+
+.ml-6{
+  margin-left: 1.5rem;
+}
+
+.mt-12{
+  margin-top: 3rem;
+}
+
+.mt-10{
+  margin-top: 2.5rem;
 }
 
 .block{
@@ -817,16 +837,24 @@ video {
   width: 100%;
 }
 
+.w-1\/4{
+  width: 25%;
+}
+
+.w-\[50\%\]{
+  width: 50%;
+}
+
 .transform{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.cursor-pointer{
-  cursor: pointer;
-}
-
 .cursor-default{
   cursor: default;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
 
 .appearance-none{
@@ -843,8 +871,16 @@ video {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.flex-col{
+  flex-direction: column;
+}
+
 .items-center{
   align-items: center;
+}
+
+.justify-start{
+  justify-content: flex-start;
 }
 
 .justify-end{
@@ -933,6 +969,16 @@ video {
   background-color: transparent;
 }
 
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-BrownDark2{
+  --tw-bg-opacity: 1;
+  background-color: rgb(154 123 79 / var(--tw-bg-opacity));
+}
+
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
@@ -949,6 +995,10 @@ video {
 
 .p-5{
   padding: 1.25rem;
+}
+
+.p-2{
+  padding: 0.5rem;
 }
 
 .px-10{
@@ -1036,10 +1086,6 @@ video {
 
 .text-center{
   text-align: center;
-}
-
-.text-end{
-  text-align: end;
 }
 
 .align-middle{
@@ -1195,10 +1241,6 @@ video {
 .checked\:bg-BrownDark:checked{
   --tw-bg-opacity: 1;
   background-color: rgb(102 66 41 / var(--tw-bg-opacity));
-}
-
-.hover\:w-12:hover{
-  width: 3rem;
 }
 
 .hover\:scale-105:hover{

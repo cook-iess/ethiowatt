@@ -3,6 +3,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
 
+session_start();
+
+if(isset($_SESSION['UserName']) && $_SESSION['UserName']== 'Admin321'){
+
 if (isset($_GET['UserName'])) {
     $UserName = $_GET['UserName'];
 ?>
@@ -23,7 +27,7 @@ if (isset($_GET['UserName'])) {
             <div class="w-full flex justify-end mt-4">
                 <div class="flex">
                     <img src="img/logo.png" alt="" class="w-12 h-10 my-auto" />
-                    <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto">
+                    <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto cursor-default">
                         Ethio Wattpad
                     </h1>
                 </div>
@@ -85,3 +89,10 @@ if (isset($_GET['UserName'])) {
     </body>
 
     </html>
+
+    <?php
+
+}else{
+    header("Location: index.php");
+}
+?>
