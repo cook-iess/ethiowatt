@@ -24,7 +24,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName']== 'Admin321') {
     .navel:hover {
       --tw-bg-opacity: 1;
       color: rgb(229 211 179 / var(--tw-text-opacity));
-      padding: 20px;
+      padding: 25px;
       background-color: rgb(102 66 41 / var(--tw-bg-opacity))
         /* #664229 */
       ;
@@ -57,7 +57,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName']== 'Admin321') {
           Home</a>
       </div>
       <a href="ppadmin.php?UserName=<?php echo $result['UserName']; ?>" class="pp w-10 flex items-center ml-3 duration-300 mr-3">
-        <img src=<?php echo $pp; ?> alt="pp" class="rounded-full my-auto cursor-pointer object-cover object-center" style="width: 85%; height: 90%; cursor: pointer;">
+      <img style="margin: 2px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 40px; height: 40px; object-fit: cover; object-position: center;" src="<?php echo $pp; ?>" alt="pp" class="mx-auto rounded-full">  
       </a>
     </div>
   </div>

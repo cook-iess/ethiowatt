@@ -28,9 +28,13 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     }
 ?>
 
+    <head>
+        <title>User Profile</title>
+    </head>
+
     <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
 
-        <p class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mb-2" style="margin-top: 75px;">User Profile</p>
+        <p class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mb-2" style="margin-top: 82px;">User Profile</p>
         <div class="flex justify-end mt-4">
             <div class="flex">
                 <a href="chanpass.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">Change Password</a>
@@ -57,7 +61,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
                         </div>
                         <div class="col-span-1">
-                            <img src="<?= $result['Photo'] ?>" alt="profile Photo" class=" h-auto rounded-full" style="width: 80%">
+                            <img style="margin: 2px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 280px; height: 280px; object-fit: cover; object-position: center;" src="<?php echo $pp; ?>" alt="pp" class="mx-auto rounded-full">
                         </div>
                         <div class="my-auto col-span-2">
                             <h1 class="text-4xl font-extrabold">Username: <?php echo $result['UserName'] ?></h1>
@@ -87,6 +91,17 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         <div>
             <p class="text-4xl font-TitleText font-bold text-BrownLight bg-BrownDark py-4 mt-8 mb-2 pl-10" style="width: 35%;">Your favourites:</p>
         </div>
+
+        <script>
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('nav');
+                if (window.pageYOffset > 0) {
+                    header.classList.add('shadow-2xl');
+                } else {
+                    header.classList.remove('shadow-2xl');
+                }
+            });
+        </script>
     </body>
 
     </html>

@@ -17,7 +17,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>User Profile Admin View</title>
+            <title>Admin Profile</title>
             <link rel="stylesheet" href="output.css">
         </head>
 
@@ -54,7 +54,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
 
                             </div>
                             <div class="col-span-1">
-                                <img src="<?= $result['Photo'] ?>" alt="profile Photo" class=" h-auto rounded-full" style="width: 80%">
+                            <img style="margin: 2px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 280px; height: 280px; object-fit: cover; object-position: center;" src="<?= $result['Photo'] ?>" alt="pp" class="mx-auto rounded-full">
                             </div>
                             <div class="my-auto col-span-2">
                                 <h1 class="text-4xl font-extrabold">Username: <?php echo $result['UserName'] ?></h1>

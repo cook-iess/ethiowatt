@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
 
 <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
 
-  <h1 class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-16 mb-6">Announcements</h1>
+  <h1 class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-20 mb-6">Announcements</h1>
   <div class="md:pt-10 pt-4">
     <?php
     $select = "select * from Announcements ORDER BY ID DESC";

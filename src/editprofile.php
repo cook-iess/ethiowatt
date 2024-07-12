@@ -69,6 +69,13 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                 }
 
 
+                $newimgname = mysqli_real_escape_string($con, $newimgname);
+                $fname = mysqli_real_escape_string($con, $fname);
+                $gender = mysqli_real_escape_string($con, $gender);
+                $Bio = mysqli_real_escape_string($con, $Bio);
+                $email = mysqli_real_escape_string($con, $email);
+
+
                 $sql = "UPDATE USER SET Full_Name = '$fname', Email = '$email', Bio = '$Bio', Gender = '$gender', Photo = '$newimgname' WHERE UserName = '$UserName'";
                 if ($con->query($sql) === TRUE) {
                     header("Location: ppuser.php?update=success");
@@ -101,6 +108,12 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     </head>
 
     <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+    <div class="flex p-4 fixed top-0 mt-1">
+        <img src="img/logo.png" class="w-14 h-10 my-auto" />
+        <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto text-BrownDark">
+            Ethio Wattpad
+        </h1>
+    </div>
         <div class="mt-14">
             <h3 class="text-center font-bold text-xl">Edit Your Profile</h3>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="ml-12 mr-12" style="width: 45%; margin-left:auto; margin-right:auto; margin-top:auto; margin-down:auto;" method="post" enctype="multipart/form-data">

@@ -9,6 +9,10 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
 
 ?>
+
+<head>
+  <title>Announcements</title>
+</head>
   <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
 
     <div class="w-full grid bg-BrownDark3" style="grid-template-columns: repeat(5, 1fr); margin-top: 75px;">
@@ -35,12 +39,11 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
       if ($count > 0) {
         while ($result = mysqli_fetch_assoc($rs)) {
       ?>
-          <div class="md:flex justify-around pb-10">
-            <div class="mr-4 p-4 justify-center items-center grid grid-cols-2" style="width: 85%">
-              <div class="col-span-2 justify-center items-center">
+          <div class="flex justify-center">
+          <div class="mr-4" style="width: 85%">
 
-                <div class="">
-                  <h2 class="md:text-5xl text-3xl font-bold font-Title border-b-2 pb-1" style="grid-column: span 3;">
+                <div class="mb-14">
+                  <h2 class="md:text-5xl text-3xl font-bold font-Title border-b-2 pb-1">
                     <?php echo $result['Title'] ?></h2>
 
 
@@ -59,8 +62,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                   </div>
 
                 </div>
-
-              </div>
+            </div>
             </div>
           </div>
       <?php
@@ -82,11 +84,6 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
       var ann = document.getElementById("ann");
       ann.setAttribute("style", "border-bottom-width: 2px;");
-
-      var newTitleElement = document.createElement("title");
-      newTitleElement.textContent = "Announcements";
-      var headElement = document.getElementsByTagName("head")[0];
-      headElement.appendChild(newTitleElement);
       
     </script>
   </body>

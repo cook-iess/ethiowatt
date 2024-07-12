@@ -23,7 +23,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     .navel:hover {
       --tw-bg-opacity: 1;
       color: rgb(229 211 179 / var(--tw-text-opacity));
-      padding: 20px;
+      padding: 25px;
       background-color: rgb(102 66 41 / var(--tw-bg-opacity))
         /* #664229 */
       ;
@@ -49,22 +49,22 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     <div class="my-auto flex">
       <div class="my-auto">
         <a href="announcements.php" id="ann" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 hover:font-extrabold font-bold text-2xl">
-          Announcements</a>
+          Home</a>
       </div>
       <div class="my-auto">
-        <a href="viewbooks.php" id="vibo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold text-2xl">
-          View Books</a>
+        <a href="viewBooks.php" id="vibo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold text-2xl">
+          Books</a>
       </div>
       <div class="my-auto">
-        <a href="viewmybooks.php" id="vimbo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold text-2xl">
-          View My Book</a>
+        <a href="viewMyBook.php" id="vimbo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold text-2xl">
+          My Books</a>
       </div>
       <div class="my-auto">
         <a href="postBook.php" id="pobo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold text-2xl">
           Post Book</a>
       </div>
       <a href="ppuser.php?UserName=<?php echo $result['UserName']; ?>" class="pp w-10 flex items-center ml-3 duration-300 mr-3">
-        <img src=<?php echo $pp; ?> alt="pp" class="rounded-full my-auto cursor-pointer object-cover object-center" style="width: 90%; height: 75%; cursor: pointer;">
+      <img style="margin: 2px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 40px; height: 40px; object-fit: cover; object-position: center;" src="<?php echo $pp; ?>" alt="pp" class="mx-auto rounded-full">                 
       </a>
     </div>
   </div>
