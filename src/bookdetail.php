@@ -76,11 +76,12 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             });
 
             document.addEventListener('DOMContentLoaded', function() {
-                // Fetch the initial like state and count
-                const likeImage = document.getElementById(`like-image-<?= $book_id ?>`);
-                const likeCount = document.getElementById(`like-count-<?= $book_id ?>`);
+                const bookId = <?= $book_id ?>;
+                const username = '<?= $username ?>';
+                const likeImage = document.getElementById(`like-image-${bookId}`);
+                const likeCount = document.getElementById(`like-count-${bookId}`);
 
-                fetch(`get_like_status.php?book_id=<?= $book_id ?>&username=<?= $username ?>`)
+                fetch(`get_like_status.php?book_id=${bookId}&username=${username}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.liked) {
@@ -144,7 +145,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                             </div>
                         </div>
 
-                        <a href="comments.php?" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                        <a href="comments.php?book_id=<?= $book_id ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">Comments</a>
                     </div>
                 </div>
 

@@ -12,14 +12,18 @@ if (isset($_GET['book_id']) && isset($_GET['username'])) {
     // Check if the item is liked
     $select = "SELECT COUNT(*) as count FROM LIKES WHERE Book_ID = '$book_id' AND User_ID = '$username'";
     $rs = mysqli_query($con, $select);
-    $row = mysqli_fetch_assoc($rs);
-    $response['liked'] = $row['count'] > 0;
+    if ($rs) {
+        $row = mysqli_fetch_assoc($rs);
+        $response['liked'] = $row['count'] > 0;
+    }
 
     // Get the like count
     $count_query = "SELECT Likes FROM BOOK WHERE Book_ID = '$book_id'";
     $count_rs = mysqli_query($con, $count_query);
-    $count_row = mysqli_fetch_assoc($count_rs);
-    $response['likeCount'] = $count_row['Likes'];
+    if ($count_rs) {
+        $count_row = mysqli_fetch_assoc($count_rs);
+        $response['likeCount'] = $count_row['Likes'];
+    }
 }
 
 echo json_encode($response);
