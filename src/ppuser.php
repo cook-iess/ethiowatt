@@ -26,6 +26,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             echo "Error deleting record: " . $con->error;
         }
     }
+
 ?>
 
     <head>
@@ -92,6 +93,64 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             <p class="text-4xl font-TitleText font-bold text-BrownLight bg-BrownDark py-4 mt-8 mb-2 pl-10" style="width: 35%;">Your favourites:</p>
         </div>
 
+        <?php
+        $select = "SELECT * FROM Favorite WHERE User_ID = '$UserName'";
+        $rs = mysqli_query($con, $select);
+        $count = mysqli_num_rows($rs);
+
+        if ($count > 0) {
+            while ($result = mysqli_fetch_assoc($rs)) {
+                $bookid = $result['Book_ID'];
+                $select2 = "SELECT * FROM BOOK WHERE Book_ID = '$bookid'";
+                $rss = mysqli_query($con, $select2);
+                while ($resultt = mysqli_fetch_assoc($rss)) { ?>
+                    <div class="flex justify-center">
+                        <div style="width: 95%;">
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;" class="">
+                                <div class="mb-14">
+                                    <div class="mt-4">
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <img style="margin: 20px auto 6px auto; width: 230px; height: 280px; object-fit: cover; object-position: center;" src="<?= $resultt['Photo'] ?>" alt="whats new" class="mx-auto">
+                                            </div>
+                                            <div class="mt-6 my-auto" style="margin-top: auto; margin-bottom: auto;">
+                                                <h2 class="font-bold font-TitleFont text-xl pb-1"> <?php echo $resultt['Title'] ?></h2>
+                                                <p class="text-xs mb-2">Uploaded on: <?php echo $resultt['Add_Date'] ?></p>
+                                                <h3 class="pt-1 text-xs mb-4"><?php echo $resultt['Book_Desc'] ?></h3>
+                                                <?php
+                                                $select3 = "SELECT COUNT(*) as count FROM LIKES WHERE Book_ID = '$bookid' AND User_ID = '$UserName'";
+                                                $rs3 = mysqli_query($con, $select3);
+                                                if ($rs3) {
+                                                    $row = mysqli_fetch_assoc($rs3);
+                                                    $liked = $row['count'] > 0;
+                                                }
+
+                                                $likeImage = $liked ? 'img/filled_like.png' : 'img/unfilled_like.png';
+                                                ?>
+                                                <div class="flex mb-5">
+                                                    <img id="likeImage_<?php echo $resultt['Book_ID']; ?>" src="<?php echo $likeImage; ?>" alt="Like" style="cursor:pointer; width: 35px; height: 35px;">
+                                                    <p class="my-auto text-lg ml-1 mt-2"><?php echo $resultt['Likes'] ?></p>
+                                                </div>
+                                                <div>
+                                                    <a href="comments.php?book_id=<?= $resultt['Book_ID'] ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        <?php }
+            }
+        } else {
+            echo "<h2 class='text-center text-3xl font-bold mb-5 text-blue-800'>No Saved Items</h2>";
+        }
+        ?>
+
+
+        ?>
+
         <script>
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('nav');
@@ -102,6 +161,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                 }
             });
         </script>
+
     </body>
 
     </html>

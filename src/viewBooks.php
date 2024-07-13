@@ -22,11 +22,11 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
       </div>
 
       <div class="w-full my-auto" style="grid-column: span 3;">
-        <h1 class="hero text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-1 mb-4">View My Books</h1>
-        <p class="text-center text-xl">Explore My Literary Works, Edit them, Delete and so on</p>
+        <h1 class="hero text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-1 mb-4">View Books</h1>
+        <p class="text-center text-xl">Explore Literary Works, Poems, give likes and comments...</p>
         <div class="text-center">
-          <p class="inline">Having a problem posting? Contact </p>
-          <a class="inline font-extrabold underline" href="https://t.me/Ikam43">Admin</a>
+          <p class="inline">Having an issue? </p>
+          <a class="inline font-extrabold underline" href="https://t.me/Ikam43">Report a problem</a>
         </div>
       </div>
 

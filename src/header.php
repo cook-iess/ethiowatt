@@ -37,7 +37,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 </head>
 <body>
 <div class="flex w-full justify-center">
-  <nav class="fixed mt-2 top-0 bg-BrownLight z-[9999] duration-300" style=" width: 93%; padding-top: 20px; padding-bottom: 20px;padding-left: 16px; padding-right:8px;">
+  <nav class="shadow-2xl fixed mt-2 top-0 bg-BrownLight z-[9999] duration-300" style=" width: 93%; padding-top: 20px; padding-bottom: 20px;padding-left: 16px; padding-right:8px;">
   <div class="flex justify-between ">
         <div class="flex">
       <img src="img/logo.png" alt="logo" class="w-10 h-8 my-auto" />

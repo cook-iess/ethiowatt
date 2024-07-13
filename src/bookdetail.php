@@ -96,7 +96,8 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     </head>
 
     <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
-        <h1 class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-20 mb-6">Book Detail</h1>
+        <h1 class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-24 mb-2">Book Detail</h1>
+
         <?php
         $select = "SELECT * FROM BOOK WHERE book_id = '$book_id'";
         $rs = mysqli_query($con, $select);
@@ -140,12 +141,23 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                             <div class="flex justify-center items-center mr-10">
                                 <button id="like-button-<?= $book_id ?>" onclick="toggleLike(<?= $book_id ?>, '<?= $username ?>')" style="width: 38px; height: 38px;" class="flex">
                                     <img id="like-image-<?= $book_id ?>" src="<?= $is_liked ? 'img/filled_like.png' : 'img/unfilled_like.png' ?>" alt="Like" class="" style="width: 32px; height: 32px;">
-                                    <span class="my-auto" id="like-count-<?= $book_id ?>"><?= $result['Likes'] ?></span>
+                                    <span class="my-auto ml-2" id="like-count-<?= $book_id ?>"><?= $result['Likes'] ?></span>
                                 </button>
                             </div>
                         </div>
 
-                        <a href="comments.php?book_id=<?= $book_id ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                        <a href="comments.php?book_id=<?= $book_id ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                    </div>
+                </div>
+
+                <div class="flex justify-end my-4 mt-4 mr-4 mb-6">
+                    <div class="flex justify-end">
+                        <a href="viewBooks.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-6 shadow-xl hover:shadow-2xl">
+                            Back</a>
+                    </div>
+                    <div class="flex justify-end">
+                        <a href="startReading.php?book_id=<?= $book_id ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-6 shadow-xl hover:shadow-2xl">
+                            Start Reading</a>
                     </div>
                 </div>
 
@@ -153,8 +165,8 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             }
         }
         ?>
-        <div class="bottom-0 absolute mb-1">
-            <img src="img/smalliamge.png" alt="" class="w-48 h-72" />
+        <div class="bottom-0 absolute ">
+            <img src="img/smalliamge.png" alt="" class="h-80 w-56" />
         </div>
     </body>
 
