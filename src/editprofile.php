@@ -131,7 +131,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                 </div>
 
                 <div class="mb-2">
-                    <label htmlFor="age" class="">
+                    <label htmlFor="Bio" class="">
                         Bio
                     </label>
                     <input id="Bio" name="Bio" type="text" placeholder="Something about yourself" value="<?php echo $result['Bio'] ?>" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
@@ -153,7 +153,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                 </div>
                 <div class="mb-2">
                     <label htmlFor="pp" class="">
-                        Upload Profile Photo
+                        Upload Profile Photo(If not uploaded the default one will be userd)
                     </label>
                     <input type="file" name="Photo" value="<?php echo $result['Photo'] ?>" class="block w-full bg-BrownLight border border-BrownDark border-dotted rounded-md px-3 py-2 text-BrownDark" />
                 </div>

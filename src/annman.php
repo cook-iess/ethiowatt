@@ -12,12 +12,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
 
   // SQL to delete record
   $sql = "DELETE FROM announcements WHERE id = $ID";
+  $rss = mysqli_query($con, $sql);
 
-  if ($con->query($sql) === TRUE) {
-    echo "Record deleted successfully";
-  } else {
-    echo "Error deleting record: " . $conn->error;
-  }
+  $select = "select * from Announcements WHERE id = $ID";
+  $rs = mysqli_query($con, $select);
+  $count = mysqli_num_rows($rs);
+  $result = mysqli_fetch_assoc($rs);
+
+  // if ($rs) {
+  //   $oldPhoto = $result['AnnPhoto'];
+  //   if (file_exists($oldPhoto)) {
+  //     if (unlink($oldPhoto)) {
+          
+  //     } else {
+  //         echo "Error: Could not delete the file '$oldPhoto'.";
+  //     }
+  // } else {
+  //     echo "Error: File '$oldPhoto' does not exist.";
+  // }
+    
+  // } else {
+  //   echo "Error deleting record: " . $conn->error;
+  // }
 }
 
 ?>
@@ -34,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
 
 <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
 
-  <h1 class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-20 mb-6">Announcements</h1>
+  <h1 class="md:text-6xl text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 md:mt-20 mt-14 md:mb-6">Announcements</h1>
   <div class="md:pt-10 pt-4">
     <?php
     $select = "select * from Announcements ORDER BY ID DESC";
@@ -44,17 +60,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
       while ($result = mysqli_fetch_assoc($rs)) {
     ?>
         <div class="md:flex justify-around md:pb-20 pb-14">
-          <div class="mr-4 p-4 justify-center items-center grid grid-cols-2" style="width: 80%">
+          <div class="p-4 justify-center items-center grid grid-cols-2 mx-auto md:w-[80%] w-[95%]">
             <div class="col-span-2 justify-center items-center">
 
               <div class="">
                 <div class="grid grid-cols-4">
-                  <h2 class="md:text-5xl text-3xl font-bold font-Title border-b-2 pb-1" style="grid-column: span 3;">
+                  <h2 class="md:text-5xl text-xl font-bold font-Title border-b-2 pb-1 md:mr-0 mr-6" style="grid-column: span 3;">
                     <?php echo $result['Title'] ?></h2>
                   <div class="w-full flex justify-center col-span-1" style="width: 100%; margin-top: 8px;">
                     <form action="annman.php" method="post">
                       <input type="hidden" name="ID" value="<?php echo $result['ID']; ?>">
-                      <button type="submit" style="margin-left: auto; margin-right: auto; padding: 10px 20px; margin-top:50px; margin-bottom:50px; background-color: #FF0000; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 15px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); transition: background-color 0.3s ease;">
+                      <button type="submit" class="mx-auto px-5 py-2 my-auto bg-red text-white rounded-lg cursor-pointer text-base uppercase" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); transition: background-color 0.3s ease;">
                         Delete
                       </button>
                     </form>
@@ -64,11 +80,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
                 <p class="text-gray-600 mb-2 mt-2">Posted by: <a href="profileAd.php?UserName=<?php echo $result['UserName']; ?>"
                   class="underline font-bold" style="display:inline-block;"><?php echo $result['UserName'] ?></a></p>
                
-                <h3 class="pt-3 text-xl"><?php echo $result['Description'] ?></h3>
+                <h3 class="pt-3 md:text-xl text-base"><?php echo $result['Description'] ?></h3>
               </div>
 
-              <div>
-                <img style="width: 500px; height: 700px; border: 2px solid #000; margin: 20px; margin-left: auto; margin-right: auto;" src="<?= $result['AnnPhoto'] ?>" alt="whats new" class="mx-auto">
+              <div class="">
+                <img class="md:w-4/6 md:h-4/6 w-2/3 h-2/3 m-5 mt-5 mx-auto" src="<?= $result['AnnPhoto'] ?>" alt="announcement image">
                 <p class="text-base text-center w-full">Uploaded on: <?php echo $result['Reg_date'] ?></p>
               </div>
 

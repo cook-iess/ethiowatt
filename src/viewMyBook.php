@@ -18,15 +18,15 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
   <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
 
-    <div class="w-full grid bg-BrownDark3" style="grid-template-columns: repeat(5, 1fr); margin-top: 75px;">
-      <div class="w-full" style="grid-column: span 2;">
+    <div class="w-full grid md:grid-cols-5 grid-cols-3 bg-BrownDark3 mt-20">
+      <div class="w-full md:col-span-2">
         <img src="img/imgimg.jpg" alt="" class="w-full">
       </div>
 
-      <div class="w-full my-auto" style="grid-column: span 3;">
-        <h1 class="hero text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-1 mb-4">View My Books</h1>
-        <p class="text-center text-xl">Explore Your Literary Works, Edit them, Delete and so on</p>
-        <div class="text-center">
+      <div class="w-full my-auto md:col-span-3 col-span-2">
+        <h1 class="hero lg:text-6xl md:text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark md:py-6 py-3 md:mb-4">View My Books</h1>
+        <p class="text-center lg:text-xl md:text-sm text-xs px-3">Explore Your Literary Works, Edit them, Delete and so on</p>
+        <div class="text-center md:text-base text-xs px-2">
           <p class="inline">Having a problem posting? </p>
           <a class="inline font-extrabold underline" href="https://t.me/Ikam43">Help Center</a>
         </div>
@@ -55,20 +55,43 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         <div class="flex justify-center">
           <div style="width: 85%">
 
-            <div class="grid grid-cols-5 gap-4" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));">
+            <div class="grid md:grid-cols-2 gap-4">
               <?php
               while ($result = mysqli_fetch_assoc($rs)) {
-                $truncatedDesc = truncateText($result['Book_Desc'], 49);
-                $truncatedTitle = truncateText($result['Title'], 39);
+                $truncatedTitle = truncateText($result['Title'], 32);
+                $truncatedDesc = truncateText($result['Book_Desc'], 110);
               ?>
                 <div class="mb-14">
-                  <div class="mt-4">
+                  <div class="grid grid-cols-2 mt-4 gap-4">
                     <div>
-                      <img style="margin: 20px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 150px; height: 200px; object-fit: cover; object-position: center;" src="<?= $result['Photo'] ?>" alt="whats new" class="mx-auto">
-                      <h2 class="font-bold font-TitleFont text-center text-xs pb-1">
-                        <?php echo $truncatedTitle ?></h2>
-                      <h3 class="pt-1 text-xs text-center"><?php echo $truncatedDesc ?></h3>
-                      <p class="text-xs text-center"><?php echo $result['Add_Date'] ?></p>
+                      <a href="mybookdetail.php?id=<?= $result['Book_ID'] ?>">
+                        <img style="margin: 10px auto 6px auto; width: 230px; height: 280px; object-fit: cover; object-position: center;" src="<?= $result['Photo'] ?>" alt="cover photo" class="mx-auto">
+                      </a>
+                    </div>
+                    <div class="mt-6">
+                      <a href="mybookdetail.php?id=<?= $result['Book_ID'] ?>">
+                        <h2 class="font-bold font-TitleFont text-xl pb-1 underline"> <?php echo $truncatedTitle ?></h2>
+                      </a>
+                      <p class="text-xs mb-2">Uploaded on: <?php echo $result['Add_Date'] ?></p>
+                      <h3 class="pt-1 text-xs mb-4"><?php echo $truncatedDesc ?></h3>
+                      <?php
+                      $bookid = $result['Book_ID'];
+                      $select3 = "SELECT COUNT(*) as count FROM LIKES WHERE Book_ID = '$bookid' AND User_ID = '$UserName'";
+                      $rs3 = mysqli_query($con, $select3);
+                      if ($rs3) {
+                        $row = mysqli_fetch_assoc($rs3);
+                        $liked = $row['count'] > 0;
+                      }
+
+                      $likeImage = $liked ? 'img/filled_like.png' : 'img/unfilled_like.png';
+                      ?>
+                      <div class="flex mb-5">
+                        <img id="likeImage_<?php echo $result['Book_ID']; ?>" src="<?php echo $likeImage; ?>" alt="Like" style="width: 35px; height: 35px;">
+                        <p class="my-auto text-lg ml-1 mt-2"><?php echo $result['Likes'] ?></p>
+                      </div>
+                      <div>
+                        <a href="mycomments.php?book_id=<?= $result['Book_ID'] ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                      </div>
                     </div>
                   </div>
                 </div>

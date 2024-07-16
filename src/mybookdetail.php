@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
+
 // session_start();
 require "header.php";
 
@@ -21,6 +22,31 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     $check_liked_result = mysqli_query($con, $check_liked_query);
     $liked_row = mysqli_fetch_assoc($check_liked_result);
     $is_liked = $liked_row['count'] > 0;
+
+    if (isset($_POST["delete"]) && isset($_GET["id"])) {
+        $ID = $_GET["id"];
+      
+        // SQL to delete record
+        $sql = "DELETE FROM Favorite WHERE Book_ID = $ID";
+        $rs = mysqli_query($con, $sql);
+
+        $sql2 = "DELETE FROM Comments WHERE Book_ID = $ID";
+        $rs2 = mysqli_query($con, $sql2);
+
+        $sql3 = "DELETE FROM Likes WHERE Book_ID = $ID";
+        $rs3 = mysqli_query($con, $sql3);
+
+        $sql4 = "DELETE FROM BOOK WHERE Book_ID = $ID";
+        $rs4 = mysqli_query($con, $sql4);
+      
+        if ($rs && $rs2 && $rs3 && $rs4) {
+          echo "Record deleted successfully";
+          header("Location: viewMyBook.php");
+        } else {
+          echo "Error deleting record: " . $conn->error;
+        }
+      }
+
 
 ?>
 
@@ -98,6 +124,18 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
         <h1 class="md:text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 md:mt-24 mt-16 mb-2">Book Detail</h1>
 
+        <div class="flex justify-end mr-4 mt-4">
+        <div class="flex justify-end">
+                <a href="editbook.php?book_id=<?= $book_id ?>" class="text-sm md:text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-6 shadow-xl hover:shadow-2xl">
+                    Edit</a>
+            </div>
+            <div class="flex justify-end">
+                <form action="mybookdetail.php?id=<?= $book_id ?>" method="post">
+                <input type="submit" name="delete" value="Delete" class="text-sm md:text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-6 shadow-xl hover:shadow-2xl">
+                </form>
+            </div>
+        </div>
+
         <?php
         $select = "SELECT * FROM BOOK WHERE book_id = '$book_id'";
         $rs = mysqli_query($con, $select);
@@ -106,10 +144,10 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             while ($result = mysqli_fetch_assoc($rs)) {
         ?>
 
-                <div class="lg:grid lg:grid-cols-6 mt-10 lg:w-full mx-10 lg:mx-0 flex-col justify-center">
+                <div class="lg:grid lg:grid-cols-6 mt-4 lg:w-full mx-10 lg:mx-0 flex-col justify-center">
                     <div class="col-span-1 lg:block hidden"></div>
                     <div class="md:mx-auto w-full mx-auto md:w-[80%] col-span-2">
-                        <img class="mb-2 md:w-72 h-96 object-cover lg:mx-0 mx-auto" src="<?= $result['Photo'] ?>" alt="">
+                        <img class="mb-2 w-72 h-96 object-cover lg:mx-0 mx-auto" src="<?= $result['Photo'] ?>" alt="">
                         <p class="text-center font-bold text-xl lg:mb-0 mb-4 mt-2"><?= $result['Title'] ?></p>
                     </div>
                     <div class="my-auto col-span-3 text-xl ">
@@ -146,13 +184,13 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                             </div>
                         </div>
 
-                        <a href="comments.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                        <a href="mycomments.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
                     </div>
                 </div>
 
                 <div class="flex justify-end mr-4 mb-6 md:mt-0 mt-8">
                     <div class="flex justify-end">
-                        <a href="startReading.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-6 shadow-xl hover:shadow-2xl">
+                        <a href="startreadwriter.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-6 shadow-xl hover:shadow-2xl">
                             Start Reading</a>
                     </div>
                 </div>

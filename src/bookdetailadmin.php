@@ -2,8 +2,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
+
 // session_start();
-require "header.php";
+require "header3.php";
 
 if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
@@ -22,10 +23,36 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     $liked_row = mysqli_fetch_assoc($check_liked_result);
     $is_liked = $liked_row['count'] > 0;
 
+    if (isset($_POST["delete"]) && isset($_GET["id"])) {
+
+        $ID = $_GET["id"];
+     
+        $sql = "DELETE FROM Favorite WHERE Book_ID = $ID";
+        $rs = mysqli_query($con, $sql);
+
+        $sql2 = "DELETE FROM Comments WHERE Book_ID = $ID";
+        $rs2 = mysqli_query($con, $sql2);
+
+        $sql3 = "DELETE FROM Likes WHERE Book_ID = $ID";
+        $rs3 = mysqli_query($con, $sql3);
+
+        $sql4 = "DELETE FROM BOOK WHERE Book_ID = $ID";
+        $rs4 = mysqli_query($con, $sql4);
+      
+        if ($rs && $rs2 && $rs3 && $rs4) {
+          echo "Record deleted successfully";
+          header("Location: bookman.php?delete=success");
+        } else {
+          echo "Error deleting record: " . $conn->error;
+        }
+
+    }
+
+
 ?>
 
     <head>
-        <title>Book Detail</title>
+        <title>Book Detail Admin</title>
         <script>
             function toggleSave(bookId, username) {
                 fetch(`toggle_save.php?book_id=${bookId}&username=${username}`)
@@ -36,9 +63,9 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
                             // Toggle the image source
                             if (saveImage.src.includes('unfilled_save.png')) {
-                                saveImage.src = 'img/filled_save.png'; // Path to your filled star image
+                                saveImage.src = 'img/filled_save.png';
                             } else {
-                                saveImage.src = 'img/unfilled_save.png'; // Path to your unfilled star image
+                                saveImage.src = 'img/unfilled_save.png';
                             }
                         } else {
                             alert('An error occurred while saving.');
@@ -69,9 +96,9 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             document.addEventListener('DOMContentLoaded', function() {
                 const saveImage = document.getElementById(`save-image-<?= $book_id ?>`);
                 if (saveImage.src.includes('unfilled_save.png')) {
-                    saveImage.src = 'img/unfilled_save.png'; // Path to your unfilled star image
+                    saveImage.src = 'img/unfilled_save.png'; 
                 } else {
-                    saveImage.src = 'img/filled_save.png'; // Path to your filled star image
+                    saveImage.src = 'img/filled_save.png'; 
                 }
             });
 
@@ -96,7 +123,15 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     </head>
 
     <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
-        <h1 class="md:text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 md:mt-24 mt-16 mb-2">Book Detail</h1>
+        <h1 class="md:text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 md:mt-24 mt-14 mb-2">Book Detail Admin</h1>
+
+        <div class="flex justify-end mr-4 mt-4">
+            <div class="flex justify-end">
+                <form action="bookdetailadmin.php?id=<?= $book_id ?>" method="post">
+                <input type="submit" name="delete" value="Delete" class="rounded-lg md:mr-4 mr-2 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-6 shadow-xl hover:shadow-2xl">
+                </form>
+            </div>
+        </div>
 
         <?php
         $select = "SELECT * FROM BOOK WHERE book_id = '$book_id'";
@@ -106,16 +141,16 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             while ($result = mysqli_fetch_assoc($rs)) {
         ?>
 
-                <div class="lg:grid lg:grid-cols-6 mt-10 lg:w-full mx-10 lg:mx-0 flex-col justify-center">
+                <div class="lg:grid lg:grid-cols-6 mt-4 lg:w-full mx-10 lg:mx-0 flex-col justify-center">
                     <div class="col-span-1 lg:block hidden"></div>
                     <div class="md:mx-auto w-full mx-auto md:w-[80%] col-span-2">
-                        <img class="mb-2 md:w-72 h-96 object-cover lg:mx-0 mx-auto" src="<?= $result['Photo'] ?>" alt="">
-                        <p class="text-center font-bold text-xl lg:mb-0 mb-4 mt-2"><?= $result['Title'] ?></p>
+                        <img class="mb-2 w-72 h-96 object-cover lg:mx-0 mx-auto" src="<?= $result['Photo'] ?>" alt="">
+                        <p class="text-center font-bold text-xl lg:mb-0 mb-4"><?= $result['Title'] ?></p>
                     </div>
                     <div class="my-auto col-span-3 text-xl ">
                         <div class="lg:grid grid-cols-4 lg:mb-6 mb-4">
                             <div class="col-span-1">
-                                <p class=""><b>Author: </b><a href="profileNu.php?UserName=<?= $result['UserName']; ?>" class="underline"><?= $result['UserName'] ?></a></p>
+                                <p class=""><b>Author: </b><a href="profileAd.php?UserName=<?= $result['UserName']; ?>" class="underline"><?= $result['UserName'] ?></a></p>
                             </div>
                             <div class="col-span-1"></div>
                             <div class="col-span-2 self-end flex lg:justify-normal justify-end md:mt-0 mt-2">
@@ -135,7 +170,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
                         <div class="grid grid-cols-2 mb-5">
                             <div class="col-span-1 my-auto">
-                                <p class="mb-2 inline"><b>PG:</b> <?= $result['PG'] ?></p>
+                                <p class="mb-2 inline text-base"><b>PG:</b> <?= $result['PG'] ?></p>
                             </div>
 
                             <div class="flex lg:justify-center justify-end items-center lg:mr-10 mr-6">
@@ -146,13 +181,13 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                             </div>
                         </div>
 
-                        <a href="comments.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                        <a href="mycommentsadmin.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
                     </div>
                 </div>
 
-                <div class="flex justify-end mr-4 mb-6 md:mt-0 mt-8">
+                <div class="flex justify-end mr-4 mb-6 md:mt-0 mt-7">
                     <div class="flex justify-end">
-                        <a href="startReading.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-6 shadow-xl hover:shadow-2xl">
+                        <a href="startreadingadmin.php?book_id=<?= $book_id ?>" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-6 shadow-xl hover:shadow-2xl">
                             Start Reading</a>
                     </div>
                 </div>

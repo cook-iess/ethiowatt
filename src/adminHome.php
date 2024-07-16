@@ -16,16 +16,16 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
         <link href="output.css" rel="stylesheet">
     </head>
 
-    <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont flex justify-center items-center">
-        <div class="flex justify-center items-center">
+    <body class="bg-BrownLight w-full md:h-screen h-full text-BrownDark font-TextFont md:flex justify-center items-center">
+        <div class="md:flex justify-center items-center md:mt-0 mt-20 md:pb-0 pb-10">
             <a href="bookman.php">
-                <div class="border border-BrownDark rounded-3xl mx-10 py-4">
+                <div class="border border-BrownDark rounded-3xl mx-10 py-4 md:mb-0 mb-8">
                     <img src="img/bookman.png" alt="book man" class="mx-auto" style="width: 90%">
                     <p class="text-center font-bold text-3xl font-TextFont">Manage Books</p>
                 </div>
             </a>
             <a href="annman.php">
-                <div class="border border-BrownDark rounded-3xl mx-10 pb-14 mb-3 py-4">
+                <div class="border border-BrownDark rounded-3xl mx-10 pb-14 md:mb-3 py-4 mb-8">
                     <img src="img/annman.png" alt="ann icon" class="">
                     <p class="text-center font-bold text-3xl font-TextFont">Manage Announcemets</p>
                 </div>
@@ -37,7 +37,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
                 </div>
             </a>
         </div>
-        <div class="absolute top-0 flex justify-start mt-4">
+        <div class="absolute top-0 flex justify-start mt-4 md:pl-0 pl-4">
             <img src="img/logo.png" class="w-14 h-10 my-auto" />
             <h1 class="font-extrabold font-TitleFont text-2xl my-auto text-BrownDark">
                 Ethio Wattpad

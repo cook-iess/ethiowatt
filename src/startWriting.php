@@ -45,14 +45,14 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
 <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont">
 
-    <div class="p-4 ml-12">
-        <p class="text-xl bg-BrownDark text-BrownLight p-3 rounded-xl mb-6 mt-6 w-fit">Book Title: <?php echo htmlspecialchars($title); ?></p>
+    <div class="p-4 md:ml-12">
+        <p class="md:text-xl bg-BrownDark text-BrownLight p-3 rounded-xl mb-6 md:mt-6 mt-0 w-fit">Book Title: <?php echo htmlspecialchars($title); ?></p>
 
         <form action="startWriting.php?title=<?php echo urlencode($title); ?>" method="post">
             <textarea name="story" id="" style="height: 500px; width: 96%;" class="mb-4 bg-transparent border placeholder-BrownDark2 p-3 focus:outline-none focus:shadow-outline" placeholder="Start writing your book..."></textarea>
             <div class="w-full mx-auto" style="margin-left: auto; margin-right: auto;">
-                <input type="submit" value="Save" name="save" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-12 shadow-xl hover:shadow-2xl">
-                <a href="postBook.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-12 shadow-xl hover:shadow-2xl">Cancel</a>
+                <input type="submit" value="Save" name="save" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold md:py-3 py-2 md:px-12 px-6 shadow-xl hover:shadow-2xl">
+                <a href="postBook.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold md:py-3 py-2 md:px-12 px-6 shadow-xl hover:shadow-2xl">Cancel</a>
             </div>
         </form>
     </div>

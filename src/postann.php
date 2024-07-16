@@ -82,23 +82,23 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
     <body class="bg-BrownLight w-full text-BrownDark font-TextFont">
         <div class="flex items-center ml-4 absolute right-0 my-auto">
             <div class="flex mt-3">
-                <img src="img/logo.png" class="w-14 h-10 my-auto" />
-                <h1 class="font-extrabold font-TitleFont text-2xl my-auto text-BrownDark cursor-default">
+                <img src="img/logo.png" class="lg:w-14 lg:h-10 w-12 h-8 my-auto" />
+                <h1 class="font-extrabold font-TitleFont lg:text-2xl my-auto text-BrownDark cursor-default">
                     Ethio Wattpad
                 </h1>
             </div>
 
             <div class="mt-4 ml-4">
-                <a href="annman.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">
+                <a href="annman.php" class="text-base rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold md:py-3 py-2 px-4 md:px-5 shadow-xl hover:shadow-2xl">
                     Back</a>
             </div>
         </div>
-        <div class="flex justify-center items-center h-full shadow-2xl shadow-BrownDark">
-            <div class="mx-auto p-5 w-5/12 shadow-2xl shadow-BrownDark2 px-10 py-10">
-                <h1 class="text-5xl font-extrabold font-TitleFont text-center">
+        <div class="flex justify-center items-center w-full h-full shadow-2xl shadow-BrownDark lg:pt-0 pt-16">
+            <div class="mx-auto lg:p-5 lg:h-auto h-full lg:w-5/12 shadow-2xl shadow-BrownDark2 md:px-10 md:pt-10 md:pb-10">
+                <h1 class="lg:text-5xl text-xl font-extrabold font-TitleFont text-center">
                     Post Announcements
                 </h1>
-                <p class="text-center">
+                <p class="text-center text-sm md:text-base">
                     About book events, book showcase, and so on
                 </p>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="py-6 px-12" enctype="multipart/form-data">
@@ -112,11 +112,10 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
                     </div>
                     <div class="col-span-2 mb-4">
                         <label htmlFor="description">Description</label>
-                        <textarea placeholder="About the title..." name="description" id="" cols="30" rows="6" 
-                        value="<?php if (isset($_GET['description'])) {
+                        <textarea placeholder="About the title..." name="description" id="" cols="30" rows="6"
+                        class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2"><?php if (isset($_GET['description'])) {
                                                                 echo $_GET['description'];
-                                                            } ?>"
-                        class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2"></textarea>
+                                                            } ?></textarea>
                     </div>
                     <div class="col-span-2 mb-4">
                         <label htmlFor="username">Username</label>
@@ -170,7 +169,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
                 </form>
             </div>
         </div>
-        <div class="top-0 absolute">
+        <div class="top-0 absolute lg:block hidden">
             <img src="img/annman.png" class="w-1/2" style="width: 30%; margin-left: 200px; margin-top: -40px;" />
         </div>
 

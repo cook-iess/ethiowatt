@@ -23,7 +23,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Start Reading</title>
+                <title>Start Reading Admin</title>
                 <link rel="stylesheet" href="output.css">
 
                 <style>
@@ -54,10 +54,10 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
                 <div class="fixed-header bg-BrownDark3 text-BrownDark w-full fixed top-0 shadow">
                     <p class="title text-sm md:text-base"><b>Title: </b><?= $result['Title'] ?></p>
-                    <a href="bookdetail.php?id=<?= $book_id ?>" class="exit-btn bg-BrownDark2 hover:bg-BrownDark duration-300 md:px-4 px-3 md:py-2 py-1 md:rounded-xl rounded-md text-BrownDark3 shadow-2xl text-sm md:text-base">Exit</a>
+                    <a href="bookdetailadmin.php?id=<?= $book_id ?>" class="exit-btn bg-BrownDark2 hover:bg-BrownDark duration-300 md:px-4 px-3 md:py-2 py-1 md:rounded-xl rounded-md text-BrownDark3 shadow-2xl text-sm md:text-base">Exit</a>
                 </div>
 
-                <div class="container md:px-8 md:pb-8 md:pt-8 px-6 pb-6 pt-3 rounded-lg bg-white shadow-xl md:w-[85%] w-[93%]">
+                <div class="container md:px-8 md:pb-8 md:pt-8 px-6 pb-6 pt-3  rounded-lg bg-white shadow-xl md:w-[85%] w-[93%]">
                     <div class="story">
                         <p><?= $result['Story'] ?></p>
                     </div>

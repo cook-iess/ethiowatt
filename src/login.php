@@ -72,20 +72,20 @@ if (isset($_POST["login"])) {
 
 <body class="w-full h-screen bg-BrownLight text-BrownDark font-TextFont">
   <div class="flex justify-center items-center h-full shadow-2xl shadow-BrownDark">
-    <div class="mx-auto p-5 w-5/12 shadow-2xl shadow-BrownDark2 px-10 py-10">
+    <div class="mx-auto p-5 lg:w-5/12 shadow-2xl shadow-BrownDark2 px-10 py-10">
       <div class="flex justify-center">
         <img src="img/logo.png" class="w-14 h-10 my-auto" />
         <h1 class="ml-1 text-center font-extrabold font-TitleFont text-3xl my-auto text-BrownDark">
           Ethio Wattpad
         </h1>
       </div>
-      <h1 class="text-6xl font-extrabold font-TitleFont text-center">
+      <h1 class="md:text-6xl text-lg font-extrabold font-TitleFont text-center">
         Welcome Back
       </h1>
       <p class="text-center">
         Please Login in to your Account
       </p>
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="py-6 h-1/3 px-12">
+      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="py-6 h-1/3 md:px-12">
         <div class="col-span-2 mb-4">
           <label htmlFor="username">Username</label>
           <input id="username" type="text" name="UserName" placeholder="Enter Username" value="<?php
@@ -134,7 +134,7 @@ if (isset($_POST["login"])) {
     </div>
   </div>
   <div class="bottom-0 absolute ml-5">
-    <img src="img/BookOffer.png" class="" />
+    <img src="img/BookOffer.png" class="lg:h-auto lg:w-auto h-44" />
   </div>
 </body>
 

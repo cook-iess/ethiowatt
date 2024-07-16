@@ -3,9 +3,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
 
+// session_start();
 require "header.php";
 
-if (isset($_SESSION['UserName'])) {
+if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
     if (isset($_GET['UserName'])) {
         $UserName = $_GET['UserName'];
@@ -17,14 +18,16 @@ if (isset($_SESSION['UserName'])) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>User Profile View</title>
+            <title>Other User Profile View</title>
             <link rel="stylesheet" href="output.css">
         </head>
 
         <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+            <div class="md:mt-24 mt-10">
 
-            <p class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mb-2" style="margin-top: 82px;">User Profile</p>
+                <p class="md:text-6xl text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-4 mb-2">User Profile</p>
 
+            </div>
             <div class="md:pt-10 pt-4">
                 <?php
                 $select = "SELECT * FROM USER WHERE UserName = '$UserName'";
@@ -33,28 +36,28 @@ if (isset($_SESSION['UserName'])) {
                 if ($count > 0) {
                     while ($result = mysqli_fetch_assoc($rs)) {
                 ?>
-                        <div class="grid grid-cols-4 justify-around pb-10">
-                            <div class="col-span-1">
+                        <div class="grid lg:grid-cols-4 grid-cols-2 justify-around pb-10">
+                            <div class="col-span-1 lg:block hidden">
 
                             </div>
                             <div class="col-span-1">
-                                <img style="margin: 2px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 280px; height: 280px; object-fit: cover; object-position: center;" src="<?= $result['Photo'] ?>" alt="pp" class="mx-auto rounded-full">
+                                <img class="mx-auto rounded-full m-1 mb-2 md:w-72 md:h-72 w-36 h-36 object-cover object-center" src="<?= $result['Photo'] ?>" alt="profile picture">
                             </div>
-                            <div class="my-auto col-span-2">
-                                <h1 class="text-4xl font-extrabold">Username: <?php echo $result['UserName'] ?></h1>
-                                <p class="text-2xl font-bold pt-4 inline-block">Full Name: </p>
-                                <p class="text-xl inline-block"><?php echo $result['Full_Name'] ?></p>
+                            <div class="my-auto lg:col-span-2">
+                                <h1 class="md:text-4xl text-sm  font-extrabold">Username: <?php echo $result['UserName'] ?></h1>
+                                <p class="md:text-2xl text-sm font-bold pt-4 inline-block">Full Name: </p>
+                                <p class="md:text-xl text-sm inline-block"><?php echo $result['Full_Name'] ?></p>
                                 <div>
-                                    <p class="text-2xl font-bold inline">Bio: </p>
-                                    <p class="text-xl inline-block"><?php echo $result['Bio'] ?></p>
+                                    <p class="md:text-2xl text-sm font-bold inline">Bio: </p>
+                                    <p class="md:text-xl text-sm inline-block"><?php echo $result['Bio'] ?></p>
                                 </div>
-                                <p class="text-2xl font-bold inline">Gender:</p>
-                                <p class="text-xl inline-block"><?php echo $result['Gender'] ?></p>
+                                <p class="md:text-2xl text-sm font-bold inline">Gender:</p>
+                                <p class="md:text-xl text-sm inline-block"><?php echo $result['Gender'] ?></p>
                                 <div>
-                                    <p class="text-2xl font-bold inline">Email: </p>
-                                    <p class="text-xl inline-block"><?php echo $result['Email'] ?></p>
+                                    <p class="md:text-2xl text-sm font-bold inline">Email: </p>
+                                    <p class="md:text-xl text-sm inline-block"><?php echo $result['Email'] ?></p>
                                 </div>
-                                <p class="text-base text-gray-600 text-center pt-3"><b>Joined: </b><?php echo $result['Reg_Date'] ?></p>
+                                <p class="md:text-base text-xs text-gray-600 md:text-center md:pt-3 pt-1"><b>Joined: </b><?php echo $result['Reg_Date'] ?></p>
                             </div>
                         </div>
             <?php
@@ -69,8 +72,61 @@ if (isset($_SESSION['UserName'])) {
             </div>
 
             <div>
-                <p class="text-4xl font-TitleText font-bold text-BrownLight bg-BrownDark py-4 mt-8 mb-2 w-1/2 pl-10">Books written By this User:</p>
+                <p class="md:text-4xl font-TitleText font-bold text-BrownLight bg-BrownDark md:px-6 md:py-6 px-4 py-4 md:mt-8 mb-2 w-fit">Books written By this User:</p>
             </div>
+
+            <?php
+
+            function truncateText($text, $maxLength)
+            {
+                if (strlen($text) > $maxLength) {
+                    $text = substr($text, 0, $maxLength) . '...';
+                }
+                return $text;
+            }
+
+
+            $select = "SELECT * FROM BOOK WHERE UserName = '$UserName'";
+            $rs = mysqli_query($con, $select);
+            $count = mysqli_num_rows($rs);
+            if ($count > 0) {
+            ?>
+
+
+
+                <div class="grid md:grid-cols-3 grid-cols-2  gap-4">
+                    <?php
+                    while ($result = mysqli_fetch_assoc($rs)) {
+                        $truncatedDesc = truncateText($result['Book_Desc'], 49);
+                        $truncatedTitle = truncateText($result['Title'], 39);
+                    ?>
+                        <div class="mb-14">
+                            <div class="mt-4">
+                                <div>
+                                    <a href="bookdetail.php?id=<?= $result['Book_ID'] ?>">
+                                        <img style="margin: 20px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 150px; height: 200px; object-fit: cover; object-position: center;" src="<?= $result['Photo'] ?>" alt="whats new" class="mx-auto">
+                                        <h2 class="font-bold font-TitleFont text-center text-xs pb-1">
+                                            <?php echo $truncatedTitle ?>
+                                        </h2>
+                                    </a>
+
+                                    <h3 class="pt-1 text-xs text-center"><?php echo $truncatedDesc ?></h3>
+                                    <p class="text-xs text-center"><?php echo $result['Add_Date'] ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+
+
+            <?php
+            } else {
+                echo "<h2 class='text-center md:text-3xl font-bold mt-12 mb-14 text-blue-800'>No Books written by this author yet</h2>";
+            }
+            ?>
+
 
             <script>
                 window.addEventListener('scroll', function() {
@@ -90,7 +146,6 @@ if (isset($_SESSION['UserName'])) {
     <?php
 
 } else {
-    header("Location: login.php");
+    header("Location: index.php");
 }
-
     ?>

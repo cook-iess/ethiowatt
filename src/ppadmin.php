@@ -24,21 +24,21 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
         <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
             <div>
 
-                <div class="w-full flex justify-end mt-4">
-                    <div class="flex">
+                <div class="w-full flex md:justify-end justify-between mt-4">
+                    <div class="flex md:ml-0 ml-4">
                         <img src="img/logo.png" alt="" class="w-12 h-10 my-auto" />
-                        <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto cursor-default">
+                        <h1 class="ml-1 font-extrabold font-TitleFont text-xl md:text-3xl my-auto cursor-default">
                             Ethio Wattpad
                         </h1>
                     </div>
                     <div class="ml-4 flex">
-                        <a href="annman.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">
-                            Back</a>
+                        <a href="adminHome.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold md:py-3 py-2 text-base md:px-5 px-4 shadow-xl hover:shadow-2xl">
+                            Home</a>
                     </div>
                 </div>
 
-                <p class="text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-4 mb-2">User Profile</p>
-                <p class="text-center text-2xl font-bold">You'r an Admin.</p>
+                <p class="md:text-6xl text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark md:py-6 py-4 mt-4 mb-2">User Profile</p>
+                <p class="text-center md:text-2xl font-bold">You'r an Admin.</p>
 
             </div>
             <div class="md:pt-10 pt-4">
@@ -49,16 +49,16 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
                 if ($count > 0) {
                     while ($result = mysqli_fetch_assoc($rs)) {
                 ?>
-                        <div class="grid grid-cols-4 justify-around pb-10">
-                            <div class="col-span-1">
+                        <div class="grid lg:grid-cols-4 grid-cols-2 md:gap-5 justify-around pb-10">
+                            <div class="col-span-1 lg:block hidden">
 
                             </div>
                             <div class="col-span-1">
-                            <img style="margin: 2px; margin-left: auto; margin-right: auto; margin-bottom: 6px; width: 280px; height: 280px; object-fit: cover; object-position: center;" src="<?= $result['Photo'] ?>" alt="pp" class="mx-auto rounded-full">
+                            <img class="mx-auto rounded-full m-1 mb-2 md:w-72 md:h-72 w-36 h-36 object-cover object-center" src="<?= $result['Photo'] ?>" alt="profile picture">
                             </div>
-                            <div class="my-auto col-span-2">
-                                <h1 class="text-4xl font-extrabold">Username: <?php echo $result['UserName'] ?></h1>
-                                <div class="flex mt-4" >
+                            <div class="my-auto lg:col-span-2">
+                                <h1 class="lg:text-4xl md:text-2xl font-extrabold">Username: <?php echo $result['UserName'] ?></h1>
+                                <div class="flex md:mt-4 mt-1" >
                                     <a href="logout.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">
                                         Logout</a>
                                 </div>
