@@ -62,11 +62,11 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         <link rel="stylesheet" href="output.css">
     </head>
 
-    <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont">
+    <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
         <div class="flex w-full h-full justify-center items-center">
             <div class="">
                 <h3 class="text-center font-bold text-xl">Change Your Password</h3>
-                <p>After successful update you will have to login again</p>
+                <p class="md:text-base text-sm">After successful update you will have to login again</p>
                 <form action="chanpass.php" method="post">
                     <div class="flex justify-center mx-auto">
                         <div>

@@ -103,7 +103,7 @@ if (isset($_POST["signup"])) {
     <link rel="stylesheet" href="output.css">
 </head>
 
-<body class="w-full h-full md:flex bg-BrownLight font-TextFont">
+<body class="w-full h-full md:flex bg-BrownLight font-TextFont overflow-y-scroll custom-scrollbar">
     <div class="flex md:p-5 p-4 md:fixed top-0 md:mt-5 mt-2">
         <img src="img/logo.png" class="w-14 h-10 my-auto" />
         <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto text-BrownDark">

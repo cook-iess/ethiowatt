@@ -109,7 +109,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         <link rel="stylesheet" href="output.css">
     </head>
 
-    <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+    <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
         <div class="flex p-4 lg:fixed top-0 mt-1">
             <img src="img/logo.png" class="md:w-14 md:h-10 w-10 h-8 my-auto" />
             <h1 class="ml-1 font-extrabold font-TitleFont md:text-3xl my-auto text-BrownDark">

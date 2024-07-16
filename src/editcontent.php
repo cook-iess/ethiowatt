@@ -59,7 +59,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         <link rel="stylesheet" href="output.css">
     </head>
 
-    <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont">
+    <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
 
         <div class="p-4 md:ml-12">
             <p class="md:text-xl bg-BrownDark text-BrownLight p-3 rounded-xl md:mb-6 mb-3 md:mt-6 mt-2 w-fit">Book Title: <?php echo $resultt['Title']; ?></p>

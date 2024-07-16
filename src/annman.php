@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ID"])) {
   <link rel="stylesheet" href="output.css">
 </head>
 
-<body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+<body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
 
   <h1 class="md:text-6xl text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 md:mt-20 mt-14 md:mb-6">Announcements</h1>
   <div class="md:pt-10 pt-4">

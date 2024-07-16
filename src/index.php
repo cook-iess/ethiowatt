@@ -5,7 +5,7 @@
     <title>Get Logged in</title>
     <link href="output.css" rel="stylesheet">
 </head>
-<body class="bg-BrownLight w-full text-BrownDark font-TextFont">
+<body class="bg-BrownLight w-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
       <div class="md:w-3/4 w-full font-sans fixed top-0 z-50 md:bg-transparent bg-BrownLight">
         <div class="flex justify-between w-full md:py-6 md:px-10 py-2 px-4 mt-3 md:mt-0">
           <div class="flex my-auto md:mr-0 mr-1">

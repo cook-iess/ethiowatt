@@ -77,7 +77,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
 ?>
 
-    <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont">
+    <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
 
         <div class="flex justify-center items-center h-screen md:mt-3 mt-48">
 

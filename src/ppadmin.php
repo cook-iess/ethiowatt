@@ -21,7 +21,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
             <link rel="stylesheet" href="output.css">
         </head>
 
-        <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+        <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
             <div>
 
                 <div class="w-full flex md:justify-end justify-between mt-4">

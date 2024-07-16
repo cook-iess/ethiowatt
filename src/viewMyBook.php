@@ -16,7 +16,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     <title>View My Books</title>
   </head>
 
-  <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+  <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
 
     <div class="w-full grid md:grid-cols-5 grid-cols-3 bg-BrownDark3 md:mt-20 mt-16">
       <div class="w-full md:col-span-2">

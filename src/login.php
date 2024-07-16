@@ -70,7 +70,7 @@ if (isset($_POST["login"])) {
   <link rel="stylesheet" href="output.css">
 </head>
 
-<body class="w-full h-screen bg-BrownLight text-BrownDark font-TextFont">
+<body class="w-full h-screen bg-BrownLight text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
   <div class="flex justify-center items-center h-full shadow-2xl shadow-BrownDark">
     <div class="mx-auto p-5 lg:w-5/12 shadow-2xl shadow-BrownDark2 px-10 py-10">
       <div class="flex justify-center">

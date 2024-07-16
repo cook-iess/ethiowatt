@@ -50,7 +50,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
             </head>
 
-            <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+            <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
 
                 <div class="fixed-header bg-BrownDark3 text-BrownDark w-full fixed top-0 shadow">
                     <p class="title text-sm md:text-base"><b>Title: </b><?= $result['Title'] ?></p>

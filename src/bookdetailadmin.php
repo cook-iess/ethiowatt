@@ -122,7 +122,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         </script>
     </head>
 
-    <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+    <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
         <h1 class="md:text-6xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 md:mt-24 mt-14 mb-2">Book Detail Admin</h1>
 
         <div class="flex justify-end mr-4 mt-4">

@@ -30,7 +30,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             <title>Admin view Comments</title>
         </head>
 
-        <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+        <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
             <div class="lg:text-xl text-BrownLight grid grid-cols-2 w-full md:mt-28 mt-16" >
                 <div class="md:col-span-1 col-span-2">
                     <p class="font-TitleFont bg-BrownDark w-fit lg:p-6 p-3"><b>Book Title: </b><?= $rss['Title'] ?></p>

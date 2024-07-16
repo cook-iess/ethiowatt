@@ -46,7 +46,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         <title>User Profile</title>
     </head>
 
-    <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
+    <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
 
         <p class="md:text-6xl text-xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark md:py-6 py-4 mb-2 md:mt-24 mt-16">User Profile</p>
         <div class="flex justify-end md:mt-6 mt-2">

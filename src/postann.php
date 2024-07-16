@@ -79,7 +79,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
         <link href="output.css" rel="stylesheet">
     </head>
 
-    <body class="bg-BrownLight w-full text-BrownDark font-TextFont">
+    <body class="bg-BrownLight w-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
         <div class="flex items-center ml-4 absolute right-0 my-auto">
             <div class="flex mt-3">
                 <img src="img/logo.png" class="lg:w-14 lg:h-10 w-12 h-8 my-auto" />

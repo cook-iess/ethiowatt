@@ -16,7 +16,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == 'Admin321' && isset
         <link href="output.css" rel="stylesheet">
     </head>
 
-    <body class="bg-BrownLight w-full md:h-screen h-full text-BrownDark font-TextFont md:flex justify-center items-center">
+    <body class="bg-BrownLight w-full md:h-screen h-full text-BrownDark font-TextFont md:flex justify-center items-center overflow-y-scroll custom-scrollbar">
         <div class="md:flex justify-center items-center md:mt-0 mt-20 md:pb-0 pb-10">
             <a href="bookman.php">
                 <div class="border border-BrownDark rounded-3xl mx-10 py-4 md:mb-0 mb-8">
