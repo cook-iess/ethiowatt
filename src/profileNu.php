@@ -23,7 +23,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         </head>
 
         <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont">
-            <div class="md:mt-24 mt-10">
+            <div class="md:mt-24 mt-16">
 
                 <p class="md:text-6xl text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark py-6 mt-4 mb-2">User Profile</p>
 

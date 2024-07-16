@@ -14,17 +14,30 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     if (isset($_POST['delete'])) {
 
         $sql = "DELETE FROM Announcements WHERE UserName = '$UserName'";
-        $sql2 = "DELETE FROM USER WHERE username = '$UserName'";
+        $sql2 = "DELETE FROM Comments WHERE User_ID = '$UserName'";
+        $sql3 = "DELETE FROM Favorite WHERE User_ID = '$UserName'";
+        $sql4 = "DELETE FROM LIKES WHERE User_ID = '$UserName'";
+        $sql2 = "DELETE FROM BOOK WHERE UserName = '$UserName'";
+        $sql6 = "DELETE FROM USER WHERE UseName = '$UserName'";
 
-        if ($con->query($sql) === TRUE) {
-            if ($con->query($sql2) === TRUE) {
-                header("Location: index.php");
-            } else {
-                echo "Error deleting record: " . $con->error;
-            }
-        } else {
-            echo "Error deleting record: " . $con->error;
-        }
+        $rs = mysqli_query($con, $sql);
+
+        $rs2 = mysqli_query($con, $sql2);
+
+        $rs3 = mysqli_query($con, $sql3);
+
+        $rs4 = mysqli_query($con, $sql4);
+
+        $rs5 = mysqli_query($con, $sql5);
+
+        $rs6 = mysqli_query($con, $sql6);
+
+        if ($rs && $rs2 && $rs3 && $rs4 && $rs5 && $rs6) {
+            header("Location: index.php");
+          } else {
+            echo "Error deleting record: " . $conn->error;
+          }
+
     }
 
 ?>

@@ -4,6 +4,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include("conn.php");
 
+// session_start();
+
 require "header.php";
 
 if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
@@ -49,7 +51,6 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                 $newimgname = mysqli_real_escape_string($con, $newimgname);
                 $title = mysqli_real_escape_string($con, $title);
                 $desc = mysqli_real_escape_string($con, $desc);
-                $story = mysqli_real_escape_string($con, $story);
                 $lang = mysqli_real_escape_string($con, $lang);
                 $genre = mysqli_real_escape_string($con, $genre);
                 $pg = mysqli_real_escape_string($con, $pg);
@@ -78,7 +79,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
     <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont">
 
-        <div class="flex justify-center items-center h-screen md:mt-3 mt-52">
+        <div class="flex justify-center items-center h-screen md:mt-3 mt-48">
 
             <div class="md:grid md:grid-cols-4 md:mt-0">
                 <div class="bg-BrownDark text-BrownLight align-middle my-auto shadow-2xl md:py-10 py-2">

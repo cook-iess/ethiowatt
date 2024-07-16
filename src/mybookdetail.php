@@ -26,7 +26,6 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     if (isset($_POST["delete"]) && isset($_GET["id"])) {
         $ID = $_GET["id"];
       
-        // SQL to delete record
         $sql = "DELETE FROM Favorite WHERE Book_ID = $ID";
         $rs = mysqli_query($con, $sql);
 
@@ -40,7 +39,6 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         $rs4 = mysqli_query($con, $sql4);
       
         if ($rs && $rs2 && $rs3 && $rs4) {
-          echo "Record deleted successfully";
           header("Location: viewMyBook.php");
         } else {
           echo "Error deleting record: " . $conn->error;
