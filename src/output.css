@@ -683,6 +683,11 @@ video {
   margin-right: auto;
 }
 
+.my-4{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .my-auto{
   margin-top: auto;
   margin-bottom: auto;
@@ -966,6 +971,10 @@ video {
 
 .w-8{
   width: 2rem;
+}
+
+.w-\[45\%\]{
+  width: 45%;
 }
 
 .w-\[85\%\]{
@@ -2138,9 +2147,9 @@ video {
     line-height: 2rem;
   }
 
-  .lg\:text-4xl{
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+  .lg\:text-3xl{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 
   .lg\:text-5xl{

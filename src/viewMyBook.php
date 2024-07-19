@@ -5,6 +5,13 @@ include("conn.php");
 
 require "header.php";
 
+require 'translation.php';
+
+$lang = 'en';
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'am'])) {
+  $lang = $_GET['lang'];
+}
+
 if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
   $UserName = $_SESSION['UserName'];
@@ -13,7 +20,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 ?>
 
   <head>
-    <title>View My Books</title>
+    <title><?php echo $translations[$lang]['vmbooks']; ?></title>
   </head>
 
   <body class="bg-BrownLight w-full h-full text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
@@ -24,11 +31,11 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
       </div>
 
       <div class="w-full my-auto md:col-span-3 col-span-2">
-        <h1 class="hero lg:text-6xl md:text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark md:py-6 py-3 md:mb-4">View My Books</h1>
-        <p class="text-center lg:text-xl md:text-sm text-xs px-3">Explore Your Literary Works, Edit them, Delete and so on</p>
+        <h1 class="hero lg:text-5xl md:text-2xl font-TitleText font-bold text-center text-BrownLight bg-BrownDark md:py-6 py-3 md:mb-4"><?php echo $translations[$lang]['vmbooks']; ?></h1>
+        <p class="text-center lg:text-xl md:text-sm text-xs px-3"><?php echo $translations[$lang]['explo']; ?></p>
         <div class="text-center md:text-base text-xs px-2">
-          <p class="inline">Having a problem posting? </p>
-          <a class="inline font-extrabold underline" href="https://t.me/Ikam43">Help Center</a>
+          <p class="inline"><?php echo $translations[$lang]['problem']; ?></p>
+          <a class="inline font-extrabold underline" href="https://t.me/Ikam43"><?php echo $translations[$lang]['report']; ?></a>
         </div>
       </div>
 
@@ -64,15 +71,15 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                 <div class="mb-14">
                   <div class="grid grid-cols-2 mt-4 gap-4">
                     <div>
-                      <a href="mybookdetail.php?id=<?= $result['Book_ID'] ?>">
+                      <a href="mybookdetail.php?id=<?= $result['Book_ID'] ?>&lang=<?php echo $_GET['lang']; ?>">
                         <img style="margin: 10px auto 6px auto; width: 230px; height: 280px; object-fit: cover; object-position: center;" src="<?= $result['Photo'] ?>" alt="cover photo" class="mx-auto">
                       </a>
                     </div>
                     <div class="mt-6">
-                      <a href="mybookdetail.php?id=<?= $result['Book_ID'] ?>">
+                      <a href="mybookdetail.php?id=<?= $result['Book_ID'] ?>&lang=<?php echo $_GET['lang']; ?>">
                         <h2 class="font-bold font-TitleFont text-xl pb-1 underline"> <?php echo $truncatedTitle ?></h2>
                       </a>
-                      <p class="text-xs mb-2">Uploaded on: <?php echo $result['Add_Date'] ?></p>
+                      <p class="text-xs mb-2"><?php echo $translations[$lang]['uon']; ?> <?php echo $result['Add_Date'] ?></p>
                       <h3 class="pt-1 text-xs mb-4"><?php echo $truncatedDesc ?></h3>
                       <?php
                       $bookid = $result['Book_ID'];
@@ -90,7 +97,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                         <p class="my-auto text-lg ml-1 mt-2"><?php echo $result['Likes'] ?></p>
                       </div>
                       <div>
-                        <a href="mycomments.php?book_id=<?= $result['Book_ID'] ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl">Comments</a>
+                        <a href="mycomments.php?book_id=<?= $result['Book_ID'] ?>&lang=<?php echo $_GET['lang']; ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-4 px-5 shadow-xl hover:shadow-2xl"><?php echo $translations[$lang]['comment']; ?></a>
                       </div>
                     </div>
                   </div>
@@ -104,7 +111,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
         </div>
       <?php
       } else {
-        echo "<h2 class='text-center text-BrownDark2 text-2xl font-bold mt-5'>You have not Written Anything Yet. Want to <a href='postBook.php' class='text-blue-500 underline'>Post?</a></h2>";
+        echo "<h2 class='text-center text-BrownDark2 text-2xl font-bold mt-5'>You have not Written Anything Yet. Want to <a href='postBook.php?lang=<?php echo $lang; ?>' class='text-blue-500 underline'>Post?</a></h2>";
       }
       ?>
     </div>

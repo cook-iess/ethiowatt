@@ -2,6 +2,13 @@
 
 session_start();
 
+require 'translation.php';
+
+$lang = 'en';
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'am'])) {
+  $lang = $_GET['lang'];
+}
+
 if (isset($_SESSION['UserName']) && $_SESSION['UserName']== 'Admin321') {
 
   $loguser = $_SESSION['UserName'];
@@ -43,20 +50,27 @@ if (isset($_SESSION['UserName']) && $_SESSION['UserName']== 'Admin321') {
         <div class="flex">
       <img src="img/logo.png" alt="logo" class="md:w-10 md:h-8 w-8 h-7 my-auto" />
       <h1 class="ml-1 font-extrabold font-TitleFont md:text-2xl my-auto cursor-default">
-        Ethio Wattpad
+      <?php echo $translations[$lang]['logo']; ?>
       </h1>
     </div>
 
     <div class="my-auto flex">
+        <a href="?lang=en" class="w-8 h-8 md:w-10 md:h-10 ml-2">
+          <img src="img/usa.png" alt="ethio"></a>
+        <a href="?lang=am" class="w-8 h-8 md:w-10 md:h-10 ml-2">
+          <img src="img/ethio.png" alt="usa"></a>
+      </div>
+
+    <div class="my-auto flex">
       <div class="my-auto">
-        <a href="postann.php" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-2xl">
-        Post Ann_</a>
+        <a href="postann.php?lang=<?php echo $_GET['lang']; ?>" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-2xl">
+        <?php echo $translations[$lang]['pann']; ?></a>
       </div>
       <div class="my-auto">
-        <a href="adminHome.php" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-2xl">
-          Home</a>
+        <a href="adminHome.php?lang=<?php echo $_GET['lang']; ?>" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-2xl">
+        <?php echo $translations[$lang]['home']; ?></a>
       </div>
-      <a href="ppadmin.php?UserName=<?php echo $result['UserName']; ?>" class="pp w-10 flex items-center ml-3 duration-300 mr-3">
+      <a href="ppadmin.php?UserName=<?php echo $result['UserName']; ?>&lang=<?php echo $_GET['lang']; ?>" class="pp w-10 flex items-center ml-3 duration-300 mr-3">
       <img class="mx-auto rounded-full m-2 md:w-10 md:h-10 w-8 h-8 object-center object-cover" src="<?php echo $pp; ?>" alt="pp" class="mx-auto rounded-full">  
       </a>
     </div>

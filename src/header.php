@@ -1,5 +1,13 @@
 <?php
+ob_start(); 
 session_start();
+
+require 'translation.php';
+
+$lang = 'en';
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'am'])) {
+  $lang = $_GET['lang'];
+}
 
 if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
   $loguser = $_SESSION['UserName'];
@@ -8,7 +16,6 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
   $result = mysqli_fetch_assoc($rs);
   $pp = $result['Photo'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,8 +45,8 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     <div class="flex justify-between items-center">
       <div class="flex">
         <img src="img/logo.png" alt="logo" class="md:w-10 md:h-8 w-8 h-6 my-auto" />
-        <h1 class="ml-1 font-extrabold font-TitleFont md:text-2xl my-auto cursor-default">
-          Ethio Wattpad
+        <h1 class="ml-1 font-extrabold font-TitleFont md:text-xl my-auto cursor-default">
+        <?php echo $translations[$lang]['logo']; ?>
         </h1>
       </div>
       <div class="flex md:hidden items-center">
@@ -49,36 +56,42 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
           <img class="rounded-full md:w-10 md:h-10 w-8 h-8 object-center object-cover" src="<?php echo $pp; ?>" alt="pp">                
         </a>
       </div>
+      <div class="my-auto flex">
+        <a href="?lang=en" class="w-8 h-8 md:w-10 md:h-10 ml-2">
+          <img src="img/usa.png" alt="ethio"></a>
+        <a href="?lang=am" class="w-8 h-8 md:w-10 md:h-10 ml-2">
+          <img src="img/ethio.png" alt="usa"></a>
+      </div>
       <div class="hidden md:flex my-auto">
         <div class="my-auto">
-          <a href="announcements.php" id="ann" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 hover:font-extrabold font-bold md:text-2xl">
-            Home</a>
+          <a href="announcements.php?lang=<?php echo $lang; ?>" id="ann" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 hover:font-extrabold font-bold md:text-xl">
+          <?php echo $translations[$lang]['home']; ?></a>
         </div>
         <div class="my-auto">
-          <a href="viewBooks.php" id="vibo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-2xl">
-            Books</a>
+          <a href="viewBooks.php?lang=<?php echo $lang; ?>" id="vibo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-xl">
+          <?php echo $translations[$lang]['books']; ?></a>
         </div>
         <div class="my-auto">
-          <a href="viewMyBook.php" id="vimbo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-2xl">
-            My Books</a>
+          <a href="viewMyBook.php?lang=<?php echo $lang; ?>" id="vimbo" class="navel mr-4 font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-xl">
+          <?php echo $translations[$lang]['mybooks']; ?></a>
         </div>
         <div class="my-auto">
-          <a href="postBook.php" id="pobo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-2xl">
-            Post Book</a>
+          <a href="postBook.php?lang=<?php echo $lang; ?>" id="pobo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold md:text-xl">
+          <?php echo $translations[$lang]['postbook']; ?></a>
         </div>
-        <a href="ppuser.php?UserName=<?php echo $result['UserName']; ?>" class="pp w-10 flex items-center ml-3 duration-300 mr-3">
+        <a href="ppuser.php?lang=<?php echo $lang; ?>&UserName=<?php echo $result['UserName']; ?>" class="pp w-10 flex items-center ml-3 duration-300 mr-3">
           <img class="mx-auto rounded-full m-2 md:w-10 md:h-10 w-8 h-8 object-center object-cover" src="<?php echo $pp; ?>" alt="pp">                
         </a>
       </div>
     </div>
     <div class="md:hidden flex flex-col items-start space-y-2 mt-4 hidden" id="mobile-menu">
-      <a href="announcements.php" id="ann" class="navel font-TitleFont text-BrownDark ease-in duration-300 hover:font-extrabold font-bold text-xl">
+      <a href="announcements.php?lang=<?php echo $lang; ?>" id="ann" class="navel font-TitleFont text-BrownDark ease-in duration-300 hover:font-extrabold font-bold text-xl">
         Home</a>
-      <a href="viewBooks.php" id="vibo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold text-xl">
+      <a href="viewBooks.php?lang=<?php echo $lang; ?>" id="vibo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold text-xl">
         Books</a>
-      <a href="viewMyBook.php" id="vimbo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold text-xl">
+      <a href="viewMyBook.php?lang=<?php echo $lang; ?>" id="vimbo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold text-xl">
         My Books</a>
-      <a href="postBook.php" id="pobo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold text-xl">
+      <a href="postBook.php?lang=<?php echo $lang; ?>" id="pobo" class="navel font-TitleFont text-BrownDark ease-in duration-300 font-bold text-xl">
         Post Book</a>
     </div>
   </nav>
@@ -99,7 +112,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 </script>
 </body>
 </html>
-
 <?php
 }
+ob_end_flush(); // End output buffering
 ?>

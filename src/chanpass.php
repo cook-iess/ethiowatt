@@ -5,6 +5,13 @@ error_reporting(E_ALL);
 
 session_start();
 
+require 'translation.php';
+
+$lang = 'en';
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'am'])) {
+  $lang = $_GET['lang'];
+}
+
 include("conn.php");
 
 if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
@@ -30,7 +37,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                         session_start();
                         session_unset();
                         session_destroy();
-                        header("Location: index.php");
+                        header("Location: index.php?change=success&lang=" . $lang);
                         exit();
                     } else {
                         header("Location: chanpass.php?update=notsuccess");
@@ -58,21 +65,21 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Change Pasword</title>
+        <title><?php echo $translations[$lang]['chpass']; ?></title>
         <link rel="stylesheet" href="output.css">
     </head>
 
     <body class="bg-BrownLight w-full h-screen text-BrownDark font-TextFont overflow-y-scroll custom-scrollbar">
         <div class="flex w-full h-full justify-center items-center">
             <div class="">
-                <h3 class="text-center font-bold text-xl">Change Your Password</h3>
-                <p class="md:text-base text-sm">After successful update you will have to login again</p>
+                <h3 class="text-center font-bold text-xl"><?php echo $translations[$lang]['chpass']; ?></h3>
+                <p class="md:text-base text-sm"><?php echo $translations[$lang]['asu']; ?></p>
                 <form action="chanpass.php" method="post">
                     <div class="flex justify-center mx-auto">
                         <div>
-                            <input type="password" name="newpassword" minlength="8" placeholder="new password" style="margin: 12px; padding: 8px;"><br>
-                            <input type="password" name="cnewpassword" minlength="8" placeholder="confirm new password" style="margin: 12px; padding: 8px;"><br>
-                            <input type="password" name="oldpassword" minlength="8" placeholder="old password" style="margin: 12px; padding: 8px;"><br>
+                            <input type="password" name="newpassword" minlength="8" placeholder="<?php echo $translations[$lang]['newpass']; ?>" style="margin: 12px; padding: 8px;"><br>
+                            <input type="password" name="cnewpassword" minlength="8" placeholder="<?php echo $translations[$lang]['confpass']; ?>" style="margin: 12px; padding: 8px;"><br>
+                            <input type="password" name="oldpassword" minlength="8" placeholder="<?php echo $translations[$lang]['oldpass']; ?>" style="margin: 12px; padding: 8px;"><br>
                         </div>
 
                     </div>
@@ -106,12 +113,12 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                     </div>
 
                     <div class="flex justify-center w-full mt-4" style="margin-left: 8px;">
-                        <form action="chanpass.php" method="post">
+                        <form action="chanpass.php?lang=<?php echo $_GET['lang']; ?>" method="post">
                             <button type="submit" name="change" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">
-                                Change
+                            <?php echo $translations[$lang]['chch']; ?>
                             </button>
                         </form>
-                        <a href="ppuser.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl">Cancel</a>
+                        <a href="ppuser.php?lang=<?php echo $_GET['lang']; ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl"><?php echo $translations[$lang]['cancel']; ?></a>
                     </div>
                 </form>
             </div>

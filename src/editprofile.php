@@ -7,6 +7,13 @@ include("conn.php");
 session_start();
 // require "header.php";
 
+require 'translation.php';
+
+$lang = 'en';
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'am'])) {
+  $lang = $_GET['lang'];
+}
+
 if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
     $UserName = $_SESSION['UserName'];
@@ -78,7 +85,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
 
                 $sql = "UPDATE USER SET Full_Name = '$fname', Email = '$email', Bio = '$Bio', Gender = '$gender', Photo = '$newimgname' WHERE UserName = '$UserName'";
                 if ($con->query($sql) === TRUE) {
-                    header("Location: ppuser.php?update=success");
+                    header("Location: ppuser.php?update=success&lang=" . $lang);
                     exit();
                 } else {
                     header("Location: editprofile.php?update=notsuccess");
@@ -103,7 +110,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Profile</title>
+        <title><?php echo $translations[$lang]['eprofile']; ?></title>
         <link rel="stylesheet" href="output.css">
     </head>
 
@@ -111,55 +118,55 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     <div class="flex p-4 fixed top-0 mt-1">
         <img src="img/logo.png" class="w-14 h-10 my-auto" />
         <h1 class="ml-1 font-extrabold font-TitleFont text-3xl my-auto text-BrownDark">
-            Ethio Wattpad
+        <?php echo $translations[$lang]['logo']; ?>
         </h1>
     </div>
         <div class="mt-14">
             <h3 class="text-center font-bold text-xl">Edit Your Profile</h3>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="ml-12 mr-12" style="width: 45%; margin-left:auto; margin-right:auto; margin-top:auto; margin-down:auto;" method="post" enctype="multipart/form-data">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>?lang=<?php echo $_GET['lang']; ?>" class="ml-12 mr-12" style="width: 45%; margin-left:auto; margin-right:auto; margin-top:auto; margin-down:auto;" method="post" enctype="multipart/form-data">
                 <div class="mb-2">
                     <label htmlFor="full_name" class="">
-                        Full name*
+                    <?php echo $translations[$lang]['full']; ?>*
                     </label>
-                    <input id="Full_Name" name="Full_Name" type="text" placeholder="enter full name Here" value="<?php echo $result['Full_Name'] ?>" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
+                    <input id="Full_Name" name="Full_Name" type="text" placeholder="<?php echo $translations[$lang]['enter']; ?>" value="<?php echo $result['Full_Name'] ?>" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
                 <div class="mb-2">
                     <label htmlFor="email" class="">
-                        Email*
+                    <?php echo $translations[$lang]['email']; ?>*
                     </label>
                     <input id="Email" name="Email" type="email" placeholder="name@example.com" value="<?php echo $result['Email'] ?>" class="block w-full shadow-lg appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
 
                 <div class="mb-2">
                     <label htmlFor="Bio" class="">
-                        Bio
+                    <?php echo $translations[$lang]['bio']; ?>
                     </label>
                     <input id="Bio" name="Bio" type="text" placeholder="Something about yourself" value="<?php echo $result['Bio'] ?>" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
                 <div class="mb-2">
                     <label htmlFor="gender" class="">
-                        Gender*
+                    <?php echo $translations[$lang]['gender']; ?>*
                     </label>
                     <div class="border rounded-lg border-BrownDark flex py-2 px-4 mt-1">
                         <input type="radio" name="Gender" value="Male" />
-                        Male
+                        <?php echo $translations[$lang]['male']; ?>
                         <input type="radio" name="Gender" value="Female" class="ml-2" />
-                        Female
+                        <?php echo $translations[$lang]['female']; ?>
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label htmlFor="userName">Username*</label>
-                    <input readonly id="UserName" name="UserName" type="text" placeholder="unique username" value="<?php echo $result['UserName'] ?>(not editable)" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
+                    <label htmlFor="userName"><?php echo $translations[$lang]['username']; ?>*</label>
+                    <input readonly id="UserName" name="UserName" type="text" placeholder="unique username" value="<?php echo $result['UserName'] ?>(<?php echo $translations[$lang]['noedit']; ?>)" class="shadow-lg w-full block appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
                 <div class="mb-2">
                     <label htmlFor="pp" class="">
-                        Upload Profile Photo(If not uploaded the default one will be userd)
+                    <?php echo $translations[$lang]['ucpp']; ?>
                     </label>
                     <input type="file" name="Photo" value="<?php echo $result['Photo'] ?>" class="block w-full bg-BrownLight border border-BrownDark border-dotted rounded-md px-3 py-2 text-BrownDark" />
                 </div>
                 <div class="mb-2">
-                    <label htmlFor="password">Current Password*</label>
-                    <input id="Password" name="Password" minLength={8} type="password" placeholder="min 8 chars" class="w-full block shadow-lg appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
+                    <label htmlFor="password"><?php echo $translations[$lang]['cupass']; ?>*</label>
+                    <input id="Password" name="Password" minLength={8} type="password" placeholder="<?php echo $translations[$lang]['min']; ?>" class="w-full block shadow-lg appearance-none border bg-transparent rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline placeholder-BrownDark2" />
                 </div>
 
                 <div class="mb-4">
@@ -190,8 +197,8 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
                     }
                     ?>
                 </div>
-                <input type="submit" value="Update" name="update" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
-                <a href="ppuser.php" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">Cancel</a>
+                <input type="submit" value="<?php echo $translations[$lang]['update']; ?>" name="update" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+                <a href="ppuser.php?lang=<?php echo $_GET['lang']; ?>" class="rounded-lg mr-4 bg-BrownDark font-TextFont text-BrownLight hover:font-extrabold font-bold py-3 px-5 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105"><?php echo $translations[$lang]['cancel']; ?></a>
             </form>
         </div>
 
