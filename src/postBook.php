@@ -23,6 +23,68 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
     $rs = mysqli_query($con, $sql);
     $result = mysqli_fetch_assoc($rs);
     $pp = $result['Photo'];
+
+    if (isset($_POST["start"])) {
+
+        $title = $_POST['title'];
+        $desc = $_POST['desc'];
+        $langg = $_POST['langg'];
+        $genre = $_POST['genre'];
+        $photo = $_FILES['Photo']['name'];
+
+        if (!empty($title) && !empty($desc) && !empty($langg) && !empty($genre) && !empty($photo)) {
+
+            if (isset($_POST["Agree"])) {
+
+                $pg = $_POST['PG'];
+
+                $imagename = $_FILES['Photo']['name'];
+                $tmpname = $_FILES['Photo']['tmp_name'];
+                $error = $_FILES['Photo']['error'];
+
+                if ($error === 0) {
+                    $imageex = pathinfo($imagename, PATHINFO_EXTENSION);
+
+                    $imageexlc = strtolower($imageex);
+
+                    $allowedex = array('jpg', 'jpeg', 'png');
+
+                    if (in_array($imageexlc, $allowedex)) {
+                        $newimgname = uniqid("IMG-", true) . '.' . $imageexlc;
+                        $imguploadpath = 'uploads/book/' . $newimgname;
+                        move_uploaded_file($tmpname, $imguploadpath);
+                        $newimgname = 'uploads/book/' . $newimgname;
+                    } else {
+                        header("Location: postBook.php?error=notsupported&lang=<?phpecho$lang;?>&title=" . $title . "&desc=" . $desc . "&langg=" . $langg . "&desc=" . $desc . "&genre=" . $genre . "&PG=" . $pg);
+                        exit();
+                    }
+                }
+
+                $newimgname = mysqli_real_escape_string($con, $newimgname);
+                $title = mysqli_real_escape_string($con, $title);
+                $desc = mysqli_real_escape_string($con, $desc);
+                $langg = mysqli_real_escape_string($con, $langg);
+                $genre = mysqli_real_escape_string($con, $genre);
+                $pg = mysqli_real_escape_string($con, $pg);
+
+                $insert = "INSERT INTO `BOOK` (`Photo`, `Title`, `Book_Desc`, `Genre`, `PG`, `Language`, `UserName`) 
+                    VALUES (\"$newimgname\", \"$title\", \"$desc\", \"$genre\", \"$pg\", \"$langg\", \"$UserName\")";
+                $yes = mysqli_query($con, $insert);
+                if ($yes) {
+                    header("Location: startWriting.php?post=success&lang=". $lang ."&title=" . $title);
+                    exit();
+                } else {
+                    header("Location: startWriting.php?error=failed&lang=". $lang ."&title=" . $title . "&desc=" . $desc . "&langg=" . $langg . "&desc=" . $desc . "&genre=" . $genre . "&PG=" . $pg);
+                exit();
+            }
+        } else {
+            header("Location: postBook.php?error=emptyfields&lang=". $lang ."&title=" . $title . "&desc=" . $desc . "&langg=" . $langg . "&desc=" . $desc . "&genre=" . $genre . "&PG=" . $pg);
+            exit();
+        }
+    }}
+
+    ob_end_flush();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,69 +170,7 @@ if (isset($_SESSION['UserName']) && isset($_COOKIE['UserName'])) {
             </div>
         </nav>
     </div>
-<?php
-    if (isset($_POST["start"])) {
 
-        $title = $_POST['title'];
-        $desc = $_POST['desc'];
-        $langg = $_POST['langg'];
-        $genre = $_POST['genre'];
-        $photo = $_FILES['Photo']['name'];
-
-        if (!empty($title) && !empty($desc) && !empty($langg) && !empty($genre) && !empty($photo)) {
-
-            if (isset($_POST["Agree"])) {
-
-                $pg = $_POST['PG'];
-
-                $imagename = $_FILES['Photo']['name'];
-                $tmpname = $_FILES['Photo']['tmp_name'];
-                $error = $_FILES['Photo']['error'];
-
-                if ($error === 0) {
-                    $imageex = pathinfo($imagename, PATHINFO_EXTENSION);
-
-                    $imageexlc = strtolower($imageex);
-
-                    $allowedex = array('jpg', 'jpeg', 'png');
-
-                    if (in_array($imageexlc, $allowedex)) {
-                        $newimgname = uniqid("IMG-", true) . '.' . $imageexlc;
-                        $imguploadpath = 'uploads/book/' . $newimgname;
-                        move_uploaded_file($tmpname, $imguploadpath);
-                        $newimgname = 'uploads/book/' . $newimgname;
-                    } else {
-                        header("Location: postBook.php?error=notsupported&lang=<?phpecho$lang;?>&title=" . $title . "&desc=" . $desc . "&langg=" . $langg . "&desc=" . $desc . "&genre=" . $genre . "&PG=" . $pg);
-                        exit();
-                    }
-                }
-
-                $newimgname = mysqli_real_escape_string($con, $newimgname);
-                $title = mysqli_real_escape_string($con, $title);
-                $desc = mysqli_real_escape_string($con, $desc);
-                $langg = mysqli_real_escape_string($con, $langg);
-                $genre = mysqli_real_escape_string($con, $genre);
-                $pg = mysqli_real_escape_string($con, $pg);
-
-                $insert = "INSERT INTO `BOOK` (`Photo`, `Title`, `Book_Desc`, `Genre`, `PG`, `Language`, `UserName`) 
-                    VALUES (\"$newimgname\", \"$title\", \"$desc\", \"$genre\", \"$pg\", \"$langg\", \"$UserName\")";
-                $yes = mysqli_query($con, $insert);
-                if ($yes) {
-                    header("Location: startWriting.php?post=success&lang=". $lang ."&title=" . $title);
-                    exit();
-                } else {
-                    header("Location: startWriting.php?error=failed&lang=". $lang ."&title=" . $title . "&desc=" . $desc . "&langg=" . $langg . "&desc=" . $desc . "&genre=" . $genre . "&PG=" . $pg);
-                exit();
-            }
-        } else {
-            header("Location: postBook.php?error=emptyfields&lang=". $lang ."&title=" . $title . "&desc=" . $desc . "&langg=" . $langg . "&desc=" . $desc . "&genre=" . $genre . "&PG=" . $pg);
-            exit();
-        }
-    }}
-
-    ob_end_flush();
-
-?>
         <div class="flex justify-center items-center h-screen md:mt-3 mt-48">
 
             <div class="md:grid md:grid-cols-4 md:mt-0">

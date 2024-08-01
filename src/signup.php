@@ -27,7 +27,7 @@ if (isset($_POST["signup"])) {
             $result = mysqli_query($con, $check_username);
             $row = mysqli_fetch_assoc($result);
             if ($row['COUNT(*)'] > 0) {
-                header("Location: signup.php?error=userexists&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&Photo=" . $_FILES['Photo']['name']);
+                header("Location: signup.php?error=userexists&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&Photo=" . $_FILES['Photo']['name'] . "&lang=" . $lang);
                 exit();
             } else {
 
@@ -56,7 +56,6 @@ if (isset($_POST["signup"])) {
                                 move_uploaded_file($tmpname, $imguploadpath);
                                 $newimgname = 'uploads/user/' . $newimgname;
                             } else {
-                                header("Location: signup.php?error=notsupported&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
                                 exit();
                             }
                         }
@@ -80,33 +79,33 @@ if (isset($_POST["signup"])) {
                         header("Location: login.php?signup=success&lang=". $lang);
                         exit();
                     } else {
-                        header("Location: signup.php?error=failed&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
+                        header("Location: signup.php?error=failed&Full_Name=" . $fname . "&Email=" . $email . "&lang=" . $lang . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
                         exit();
                     }
                 } else {
-                    header("Location: signup.php?error=nomatch&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
+                    header("Location: signup.php?error=nomatch&Full_Name=" . $fname . "&Email=" . $email . "&lang=" . $lang . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
                     exit();
                 }
             }
         } else {
-            header("Location: signup.php?error=notaggreed&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
+            header("Location: signup.php?error=notaggreed&Full_Name=" . $fname . "&Email=" . $email . "&lang=" . $lang . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
             exit();
         }
     } else {
-        header("Location: signup.php?error=emptyfields&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name']);
+        header("Location: signup.php?error=emptyfields&Full_Name=" . $fname . "&Email=" . $email . "&Bio=" . $Bio . "&UserName=" . $username . "&Photo=" . $_FILES['Photo']['name'] . "&lang=" . $lang);
         exit();
     }
 }
 
 ?>
 
-
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign-up</title>
+    <title><?php echo $translations[$lang]['sign']; ?></title>
     <link rel="stylesheet" href="output.css">
 </head>
 
@@ -124,7 +123,8 @@ if (isset($_POST["signup"])) {
       </div>
     </div>
 
-    <div class="md:grid grid-cols-2 h-full">
+    <div class="flex justify-center items-center h-screen w-full">
+            <div class="md:grid grid-cols-2 h-full">
         <div class="bg-BrownDark text-BrownLight align-middle my-auto md:rounded-r-3xl md:pt-10 pt-4 md:mb-auto mb-7">
             <div class="">
                 <p class="md:text-3xl text-xl font-bold text-center mt-4">
@@ -135,11 +135,11 @@ if (isset($_POST["signup"])) {
                 </p>
             </div>
             <div class="">
-                <img src="img/book3.png" class="mx-auto md:px-14 px-8 mb:pb-14 pb-8 md:w-96 w-72" />
+                <img src="img/book3.png" class="mx-auto md:px-14 px-10 mb:pb-14 pb-8 md:w-96 w-72" />
             </div>
         </div>
 
-        <div class="bg-BrownLight text-BrownDark my-auto">
+        <div class="text-BrownDark my-auto">
             <h1 class="md:text-6xl text-3xl ml-12 font-extrabold font-TitleFont">
             <?php echo $translations[$lang]['create']; ?>
             </h1>
@@ -224,7 +224,7 @@ if (isset($_POST["signup"])) {
                         <?php
                         } elseif ($_GET['error'] == "notaggreed") {
                         ?>
-                            <div class="error text-red"> <?php echo $translations[$lang]['2']; ?>/div>
+                            <div class="error text-red"> <?php echo $translations[$lang]['2']; ?></div>
                         <?php
                         } elseif ($_GET['error'] == "nomatch") {
                         ?>
@@ -262,6 +262,9 @@ if (isset($_POST["signup"])) {
             </form>
         </div>
     </div>
+    </div>
+
+
 </body>
 
 </html>
